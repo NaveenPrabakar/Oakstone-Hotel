@@ -66,7 +66,7 @@ public class Booking implements BookingInterface {
         String roomNumber = sc.nextLine();
 
         room selectedRoom = availableRooms.stream()
-                .filter(r -> r.getRoomNumber().equals(roomNumber))
+                .filter(r -> r.getRoomNumber() == Integer.parseInt(roomNumber))
                 .findFirst().orElse(null);
 
         if (selectedRoom == null) {
@@ -74,11 +74,12 @@ public class Booking implements BookingInterface {
             return;
         }
 
-        selectedRoom.setStartDate(checkIn.toString());
-        selectedRoom.setEndDate(checkOut.toString());
+        selectedRoom.setStartDate(checkIn);
+        selectedRoom.setEndDate(checkOut);
+
 
         if (createReservation(guestName, selectedRoom)) {
-            System.out.println("\n✅ Reservation created successfully!");
+            System.out.println("\nReservation created successfully!");
         } else {
             System.out.println("Could not create reservation.");
         }
@@ -215,8 +216,8 @@ public class Booking implements BookingInterface {
 
     @Override
     public boolean checkAvailability(room room) {
-        LocalDate start = LocalDate.parse(room.getStartDate());
-        LocalDate end = LocalDate.parse(room.getEndDate());
+        LocalDate start = room.getStartDate();
+        LocalDate end = room.getEndDate();
         return isRoomAvailable(room.getRoomNumber(), start, end);
     }
 
@@ -229,7 +230,7 @@ public class Booking implements BookingInterface {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                String roomNumber = parts[0];
+                int roomNumber = Integer.parseInt(parts[0]);
                 String type = parts[1];
                 if (isRoomAvailable(roomNumber, requestedStart, requestedEnd)) {
                     availableRooms.add(new room(roomNumber, type, "Available", null, null));
@@ -241,13 +242,13 @@ public class Booking implements BookingInterface {
         return availableRooms;
     }
 
-    private boolean isRoomAvailable(String roomNumber, LocalDate requestedStart, LocalDate requestedEnd) {
+    private boolean isRoomAvailable(int roomNumber, LocalDate requestedStart, LocalDate requestedEnd) {
         try (BufferedReader br = new BufferedReader(new FileReader(RESERVATION_FILE))) {
             br.readLine(); // skip header
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts[2].equals(roomNumber)) {
+                if (Integer.parseInt(parts[2]) == roomNumber) {
                     LocalDate existingStart = LocalDate.parse(parts[3]);
                     LocalDate existingEnd = LocalDate.parse(parts[4]);
                     if (!requestedEnd.isBefore(existingStart) && !requestedStart.isAfter(existingEnd)) {

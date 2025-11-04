@@ -28,7 +28,7 @@ public class GuestSession implements CheckingProcess {
                 System.out.println();
                 System.out.println("Thanks for waiting, you have a reservation from " + reserve.getStartDate() + " to " + reserve.getEndDate());
                 System.out.println();
-                ((FrontDesk) frontDesk).provideKeyCard(Integer.parseInt(reserve.getRoomNumber()), guest);
+                ((FrontDesk) frontDesk).provideKeyCard(reserve.getRoomNumber(), guest);
                 System.out.println();
                 System.out.println("Here is your keycard for room " + reserve.getRoomNumber() );
                 break;

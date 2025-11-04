@@ -1,13 +1,15 @@
 package Main.Booking;
 
+import java.time.LocalDate;
+
 public class Reservation {
     private String reservationId;
     private String guestName;
-    private String roomNumber;
-    private String startDate;
-    private String endDate;
+    private int  roomNumber;
+    private LocalDate  startDate;
+    private LocalDate endDate;
 
-    public Reservation(String reservationId, String guestName, String roomNumber, String startDate, String endDate) {
+    public Reservation(String reservationId, String guestName, int roomNumber, LocalDate  startDate, LocalDate  endDate) {
         this.reservationId = reservationId;
         this.guestName = guestName;
         this.roomNumber = roomNumber;
@@ -23,15 +25,15 @@ public class Reservation {
         return guestName;
     }
 
-    public String getRoomNumber() {
+    public int getRoomNumber() {
         return roomNumber;
     }
 
-    public String getStartDate() {
+    public LocalDate getStartDate() {
         return startDate;
     }
 
-    public String getEndDate() {
+    public LocalDate getEndDate() {
         return endDate;
     }
 

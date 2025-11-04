@@ -2,14 +2,16 @@ package Main.Room;
 
 import Main.Guest.Guest;
 
+import java.time.LocalDate;
+
 public class room implements RoomInterface {
-    private String roomNumber;
+    private int roomNumber;
     private String type;
     private String availability; // "Available" or "Reserved"
-    private String startDate; // YYYY-MM-DD or "null"
-    private String endDate;   // YYYY-MM-DD or "null"
+    private LocalDate  startDate; // YYYY-MM-DD or "null"
+    private LocalDate endDate;   // YYYY-MM-DD or "null"
 
-    public room(String roomNumber, String type, String availability, String startDate, String endDate) {
+    public room(int roomNumber, String type, String availability, LocalDate  startDate, LocalDate  endDate) {
         this.roomNumber = roomNumber;
         this.type = type;
         this.availability = availability;
@@ -19,18 +21,21 @@ public class room implements RoomInterface {
 
     public static room fromString(String line) {
         String[] parts = line.split(",");
-        return new room(parts[0], parts[1], parts[2], parts[3], parts[4]);
+        int number = Integer.parseInt(parts[0]);
+        LocalDate start = parts[3].equals("null") ? null : LocalDate.parse(parts[3]);
+        LocalDate end = parts[4].equals("null") ? null : LocalDate.parse(parts[4]);
+        return new room(number, parts[1], parts[2], start, end);
     }
 
-    public String getRoomNumber() { return roomNumber; }
+    public int getRoomNumber() { return roomNumber; }
     public String getType() { return type; }
     public String getAvailability() { return availability; }
-    public String getStartDate() { return startDate; }
-    public String getEndDate() { return endDate; }
+    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getEndDate() { return endDate; }
 
     public void setAvailability(String availability) { this.availability = availability; }
-    public void setStartDate(String startDate) { this.startDate = startDate; }
-    public void setEndDate(String endDate) { this.endDate = endDate; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+    public void setEndDate(LocalDate endDate) { this.endDate = endDate; }
 
     @Override
     public boolean setStatus(String status) {

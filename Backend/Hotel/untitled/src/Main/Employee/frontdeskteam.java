@@ -2,12 +2,15 @@ package Main.Employee;
 
 import Main.Guest.*;
 import Main.Booking.*;
+import java.time.LocalDate;
+
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.io.File;
 import java.io.PrintWriter;
 import java.io.IOException;
+
 
 public class frontdeskteam extends Employee implements FrontDesk{
 
@@ -43,7 +46,14 @@ public class frontdeskteam extends Employee implements FrontDesk{
                 String endDate = reserve[4];
 
                 if(name.equals(guest.getName())){
-                    return new Reservation(revid, name, roomnumber, startDate,endDate);
+                    return new Reservation(
+                            revid,
+                            name,
+                            Integer.parseInt(roomnumber),
+                            LocalDate.parse(startDate),
+                            LocalDate.parse(endDate)
+                    );
+
                 }
             }
         }

@@ -14,7 +14,8 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
 
-        File file = new File("src/Main/Employee.txt");
+        File file = new File("Backend/Hotel/untitled/src/Main/Employee.txt");
+
 
         Scanner scnr = new Scanner(file);
 
