@@ -1,4 +1,0 @@
-roomNumber,type
-101,Single
-102,Double
-103,Suite

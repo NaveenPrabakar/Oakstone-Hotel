@@ -12,4 +12,12 @@ public class CheckSystemController {
         GuestSession check_in = new GuestSession();
         check_in.checkin(frontDesk);
     }
+
+    public static void RunCheckOut(Employee frontDesk){
+        System.out.println("===== HOTEL CHECK-OUT SYSTEM =====");
+        System.out.println("Hi, I am " + frontDesk.getName() + ", Can you provide your name?");
+
+        GuestSession check_out = new GuestSession();
+        check_out.checkout(frontDesk);
+    }
 }

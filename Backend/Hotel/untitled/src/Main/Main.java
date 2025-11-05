@@ -14,7 +14,7 @@ public class Main {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
 
-        File file = new File("Backend/Hotel/untitled/src/Main/Employee.txt");
+        File file = new File("Employee.txt");
 
 
         Scanner scnr = new Scanner(file);
@@ -64,6 +64,23 @@ public class Main {
                 CheckSystemController.RunCheckin(frontDesk);
                 break;
             }
+            else if (choice.equals("3")) {
+                System.out.println("Check Out option selected.");
+                Employee frontDesk = null;
+
+                // Find available FrontDesk Employee
+                for (Employee e : employees) {
+                    if (e.role().equals("FrontDesk")) {
+                        frontDesk = e;
+                        break;
+                    }
+                }
+
+                // Call the checkout system
+                CheckSystemController.RunCheckOut(frontDesk);
+                break;
+            }
+
 
             if (running) {
                 System.out.println("\nPress Enter to return to main menu...");
