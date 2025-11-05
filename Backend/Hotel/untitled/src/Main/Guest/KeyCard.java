@@ -5,9 +5,9 @@ import Main.Room.room;
 public class KeyCard implements KeyCardInterface {
 
     private int roomnumber;
-    Boolean status;
+    boolean status;
     Guest owner;
-    public KeyCard(int roomnumber, Boolean status, Guest owner){
+    public KeyCard(int roomnumber, boolean status, Guest owner){
         this.roomnumber = roomnumber;
         this.status = status;
         this.owner = owner;
@@ -17,7 +17,7 @@ public class KeyCard implements KeyCardInterface {
         return roomnumber;
     }
 
-    public Boolean getStatus(){
+    public boolean getStatus(){
         return status;
     }
 

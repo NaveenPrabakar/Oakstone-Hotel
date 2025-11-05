@@ -11,7 +11,7 @@ public interface KeyCardInterface {
 
     int getRoomnumber();
 
-    Boolean getStatus();
+    boolean getStatus();
 
     Guest getOwner();
 }

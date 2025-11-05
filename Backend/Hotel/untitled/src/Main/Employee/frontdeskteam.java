@@ -27,8 +27,13 @@ public class frontdeskteam extends Employee implements FrontDesk{
     //access to past reservations
     private static final String PAST_RESERVATIONS = "Past_Reservation.txt";
 
+    private static Housekeeping HousekeepingManager;
     public frontdeskteam(int id, String name) {
         super(id, name, "FrontDesk");
+    }
+
+    public void addHouseKeepingManager(Housekeeping manager){
+        this.HousekeepingManager = manager;
     }
 
     @Override
@@ -167,6 +172,7 @@ public class frontdeskteam extends Employee implements FrontDesk{
         // Revoke keycard for this guest
         revokeKeyCard(roomNumber, guest);
         room roomToClean = alertCleaningStaff(roomNumber);
+        HousekeepingManager.addToCleanQueue(roomToClean);
         System.out.println(roomToClean.getRoomNumber() + " " + roomToClean.getType());
 
         return true;
