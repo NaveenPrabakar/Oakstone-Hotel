@@ -2,17 +2,16 @@ package Main;
 
 import java.io.FileNotFoundException;
 import java.util.*;
-import Main.Booking.Booking;
 import java.util.Scanner;
 import java.io.File;
+
+import Main.Booking.Booking;
 import Main.Employee.*;
 import Main.Guest.CheckSystemController;
 import Main.Room.room;
 import Main.Guest.Guest;
 import Main.Guest.KeyCard;
 import Main.Guest.RoomAccessResult;
-import Main.Room.room;
-
 
 public class Main {
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
@@ -20,35 +19,34 @@ public class Main {
         boolean running = true;
 
         File file = new File("Employee.txt");
-
-
         Scanner scnr = new Scanner(file);
 
         ArrayList<Employee> employees = new ArrayList<>();
-
         ArrayList<Housekeeping> housekeepings = new ArrayList<>();
         frontdeskteam FDManager = null;
         Housekeeping HKManager = null;
 
-        //Get List of Employees Working
-        while(scnr.hasNextLine()){
+        // Get List of Employees Working
+        while (scnr.hasNextLine()) {
             String line = scnr.nextLine();
             String[] employee = line.split(" ");
+
+            if (employee.length < 4) continue; // prevent index error
 
             int id = Integer.parseInt(employee[0]);
             String name = employee[1] + employee[2];
             String position = employee[3];
 
-            if(position.equals("FrontDesk")){
+            if (position.equals("FrontDesk")) {
                 FDManager = new frontdeskteam(id, name);
                 employees.add(FDManager);
-            }
-            else if (position.equals("Cleaner")){
+            } else if (position.equals("Cleaner")) {
                 HKManager = new Housekeeping(id, name);
                 employees.add(HKManager);
             }
         }
-        if(FDManager != null && HKManager != null) {
+
+        if (FDManager != null && HKManager != null) {
             FDManager.addHouseKeepingManager(HKManager);
         }
 
@@ -58,14 +56,13 @@ public class Main {
             System.out.print("\nSelect an option (1–6) or 0 to exit: ");
             String choice = sc.nextLine().trim();
 
-            if(choice.equals("1")){
+            if (choice.equals("1")) {
                 Booking.handleBooking();
-            }
-            else if(choice.equals("2")) {
+            } else if (choice.equals("2")) {
                 System.out.println("Check In option selected.");
                 Employee frontDesk = null;
 
-                //Find available FrontDesk Employee
+                // Find available FrontDesk Employee
                 for (Employee e : employees) {
                     if (e.role().equals("FrontDesk")) {
                         frontDesk = e;
@@ -74,11 +71,9 @@ public class Main {
 
                 CheckSystemController.RunCheckin(frontDesk);
 
-            }
-            else if(choice.equals("6")) {
+            } else if (choice.equals("6")) {
                 handleRoomAccess(sc);
-            }
-            else if (choice.equals("3")) {
+            } else if (choice.equals("3")) {
                 System.out.println("Check Out option selected.");
                 Employee frontDesk = null;
 
@@ -92,34 +87,32 @@ public class Main {
                 // Call the checkout system
                 CheckSystemController.RunCheckOut(frontDesk);
                 Thread.sleep(90000);
-            }
-            else if(choice.equals("0")){
+
+            } else if (choice.equals("0")) {
                 break;
-            }
-            else if(choice.equals("9")){
+
+            } else if (choice.equals("9")) {
                 int RoomNumber = 10;
                 int i = 0;
-                while( i < 3){
+                while (i < 3) {
                     housekeepings.add(new Housekeeping(i, "alpha"));
-                    System.out.println("added new housekeeping "+ i);
+                    System.out.println("added new housekeeping " + i);
                     i++;
                 }
-                while(true){
+                while (true) {
                     housekeepings.get(0).addToCleanQueue(new room(RoomNumber, null, null, null, null));
-                    RoomNumber+=1;
+                    RoomNumber += 1;
                 }
-            }
 
-
-            else{
+            } else {
                 System.out.println("That's not an option try again");
                 continue;
             }
+
             if (running) {
                 System.out.println("\nPress Enter to return to main menu...");
-                String enter = sc.nextLine();
+                sc.nextLine();
             }
-
         }
         scnr.close();
     }
@@ -192,7 +185,6 @@ public class Main {
             }
 
             Guest guest = new Guest(guestName, -1);
-
             RoomAccessResult result = guest.scanKeyCard(keyCard.get(), targetRoom.get());
             System.out.println(result.getMessage());
 
@@ -253,7 +245,8 @@ public class Main {
         private Optional<KeyCard> findMatchingCard(List<KeyCard> cards, int roomNumber, String guestName) {
             KeyCard match = null;
             for (KeyCard card : cards) {
-                if (card.getRoomnumber() == roomNumber && card.getOwner().getName().equalsIgnoreCase(guestName)) {
+                if (card.getRoomnumber() == roomNumber &&
+                        card.getOwner().getName().equalsIgnoreCase(guestName)) {
                     match = card;
                 }
             }
@@ -346,4 +339,3 @@ public class Main {
         }
     }
 }
-
