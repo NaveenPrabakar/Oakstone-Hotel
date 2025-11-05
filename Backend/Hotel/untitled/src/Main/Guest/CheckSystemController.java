@@ -1,8 +1,6 @@
 package Main.Guest;
 
-import Main.Employee.*;
-import java.util.*;
-import Main.Booking.*;
+import Main.Employee.Employee;
 
 public class CheckSystemController {
     public static void RunCheckin(Employee frontDesk){
