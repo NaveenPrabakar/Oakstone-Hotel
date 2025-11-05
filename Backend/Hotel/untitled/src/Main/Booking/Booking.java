@@ -7,9 +7,9 @@ import java.util.*;
 
 public class Booking implements BookingInterface {
 
-    private static final String ROOM_FILE = "Backend/Hotel/untitled/src/Main/Room.txt";
-    private static final String RESERVATION_FILE = "Backend/Hotel/untitled/src/Main/Reservation.txt";
-    private static final String GUEST_FILE = "Backend/Hotel/untitled/src/Main/Guest.txt";
+    private static final String ROOM_FILE = "Room.txt";
+    private static final String RESERVATION_FILE = "Reservation.txt";
+    private static final String GUEST_FILE = "Guest.txt";
 
     // ===================== MAIN MENU =====================
     public static void handleBooking() {

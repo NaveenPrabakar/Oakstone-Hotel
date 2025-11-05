@@ -1,4 +1,0 @@
-reservationId,guestName,roomNumber,startDate,endDate
-682bd36f-6d92-443c-863f-dd8bc9999104,Sad Day,102,2025-11-20,2025-11-24
-074d40cd-9d53-49c1-99c7-424476e68290,Ozair Nurani,101,2025-11-20,2025-11-23
-d472eb35-255c-468b-a5d2-bd8595f325ea,Puka Nacua,101,2025-12-06,2025-12-23
