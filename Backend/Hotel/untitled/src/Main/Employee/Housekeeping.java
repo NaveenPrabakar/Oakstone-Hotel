@@ -68,6 +68,7 @@ public class Housekeeping extends Employee implements CleaningStaff {
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }
+        System.out.println("Cleaning Room Done: " + roomToClean.getRoomNumber());
 
     }
 

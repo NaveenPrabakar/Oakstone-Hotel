@@ -7,6 +7,7 @@ import java.util.Scanner;
 import java.io.File;
 import Main.Employee.*;
 import Main.Guest.CheckSystemController;
+import Main.Room.room;
 
 
 public class Main {
@@ -20,6 +21,8 @@ public class Main {
         Scanner scnr = new Scanner(file);
 
         ArrayList<Employee> employees = new ArrayList<>();
+
+        ArrayList<Housekeeping> housekeepings = new ArrayList<>();
 
         //Get List of Employees Working
         while(scnr.hasNextLine()){
@@ -63,8 +66,6 @@ public class Main {
 
                 CheckSystemController.RunCheckin(frontDesk);
                 break;
-            } else if (choice.equals('3')) {
-
             }
             else if (choice.equals("3")) {
                 System.out.println("Check Out option selected.");
@@ -81,6 +82,20 @@ public class Main {
                 // Call the checkout system
                 CheckSystemController.RunCheckOut(frontDesk);
                 break;
+            }
+
+            else if(choice.equals("9")){
+                int RoomNumber = 10;
+                int i = 0;
+                while( i < 3){
+                    housekeepings.add(new Housekeeping(i, "alpha"));
+                    System.out.println("added new housekeeping "+ i);
+                    i++;
+                }
+                while(true){
+                    housekeepings.get(0).addToCleanQueue(new room(RoomNumber, null, null, null, null));
+                    RoomNumber+=1;
+                }
             }
 
 
