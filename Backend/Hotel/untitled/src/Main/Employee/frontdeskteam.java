@@ -76,12 +76,11 @@ public class frontdeskteam extends Employee implements FrontDesk{
             Scanner scnr = new Scanner(file);
 
             while(scnr.hasNextLine()){
-                String[] profile = scnr.nextLine().split(" ");
-                String name = profile[0] + " " + profile[1];
-//                int id = Integer.parseInt(profile[2]);
+                String[] profile = scnr.nextLine().split(",");
+                String name = profile[0];
+                int id = Integer.parseInt(profile[1]);
 
-//                if(guest.getName().equals(name) && guest.getid() == id){
-                if(guest.getName().equals(name)){
+                if(guest.getName().equals(name) && guest.getid() == id){
                     return true;
                 }
             }
@@ -91,6 +90,7 @@ public class frontdeskteam extends Employee implements FrontDesk{
         }
         return false;
     }
+
 
     @Override
     public void provideKeyCard(int roomnumber, Guest owner) {

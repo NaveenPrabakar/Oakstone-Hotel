@@ -45,6 +45,9 @@ public class Booking implements BookingInterface {
         System.out.print("Enter Guest Name: ");
         String guestName = sc.nextLine();
 
+        System.out.print("Enter Guest ID: ");
+        int guestId = Integer.parseInt(sc.nextLine());
+
         System.out.print("Enter Check-in Date (YYYY-MM-DD): ");
         LocalDate checkIn = LocalDate.parse(sc.nextLine());
 
@@ -78,7 +81,7 @@ public class Booking implements BookingInterface {
         selectedRoom.setEndDate(checkOut);
 
 
-        if (createReservation(guestName, selectedRoom)) {
+        if (createReservation(guestName, guestId, selectedRoom)) {
             System.out.println("\nReservation created successfully!");
         } else {
             System.out.println("Could not create reservation.");
@@ -113,23 +116,28 @@ public class Booking implements BookingInterface {
 
     // ===================== INTERFACE IMPLEMENTATION =====================
     @Override
-    public boolean createReservation(String guestName, room room) {
+    public boolean createReservation(String guestName, int guestId, room room) {
         try {
-            // Append reservation to file
+            // Generate a unique reservation ID
             String reservationId = UUID.randomUUID().toString();
+
+            // Append reservation to Reservation.txt (without guestId)
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(RESERVATION_FILE, true))) {
-                bw.write(reservationId + "," + guestName + "," + room.getRoomNumber() + "," +
-                        room.getStartDate() + "," + room.getEndDate());
+                bw.write(reservationId + "," + guestName + "," +
+                        room.getRoomNumber() + "," + room.getStartDate() + "," + room.getEndDate());
                 bw.newLine();
             }
 
-            addGuestIfNew(guestName);
+            // Add guest to Guest.txt if they are new
+            addGuestIfNew(guestName, guestId);
+
             return true;
         } catch (IOException e) {
             System.out.println("Error creating reservation: " + e.getMessage());
             return false;
         }
     }
+
 
     @Override
     public boolean modifyReservation(String reservationId) {
@@ -262,21 +270,24 @@ public class Booking implements BookingInterface {
         return true;
     }
 
-    private void addGuestIfNew(String guestName) {
+    private void addGuestIfNew(String guestName, int guestId) {
         boolean exists = false;
         try (BufferedReader br = new BufferedReader(new FileReader(GUEST_FILE))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.trim().equalsIgnoreCase(guestName)) {
+                String[] parts = line.split(",");
+                if (parts.length >= 2 && parts[0].trim().equalsIgnoreCase(guestName)
+                        && Integer.parseInt(parts[1].trim()) == guestId) {
                     exists = true;
                     break;
                 }
             }
-        } catch (IOException ignored) {}
+        } catch (IOException ignored) {
+        }
 
         if (!exists) {
             try (BufferedWriter bw = new BufferedWriter(new FileWriter(GUEST_FILE, true))) {
-                bw.write(guestName);
+                bw.write(guestName + "," + guestId);
                 bw.newLine();
             } catch (IOException e) {
                 System.out.println("Error writing guest: " + e.getMessage());
