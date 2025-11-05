@@ -11,7 +11,7 @@ import Main.Room.room;
 
 
 public class Main {
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args) throws FileNotFoundException, InterruptedException {
         Scanner sc = new Scanner(System.in);
         boolean running = true;
 
@@ -23,6 +23,8 @@ public class Main {
         ArrayList<Employee> employees = new ArrayList<>();
 
         ArrayList<Housekeeping> housekeepings = new ArrayList<>();
+        frontdeskteam FDManager = null;
+        Housekeeping HKManager = null;
 
         //Get List of Employees Working
         while(scnr.hasNextLine()){
@@ -34,12 +36,16 @@ public class Main {
             String position = employee[3];
 
             if(position.equals("FrontDesk")){
-                employees.add(new frontdeskteam(id, name));
+                FDManager = new frontdeskteam(id, name);
+                employees.add(FDManager);
             }
             else if (position.equals("Cleaner")){
-                employees.add(new Housekeeping(id, name));
+                HKManager = new Housekeeping(id, name);
+                employees.add(HKManager);
             }
-
+        }
+        if(FDManager != null && HKManager != null) {
+            FDManager.addHouseKeepingManager(HKManager);
         }
 
         while (running) {
@@ -60,7 +66,6 @@ public class Main {
                 for (Employee e : employees) {
                     if (e.role().equals("FrontDesk")) {
                         frontDesk = e;
-                        break;
                     }
                 }
 
@@ -75,15 +80,14 @@ public class Main {
                 for (Employee e : employees) {
                     if (e.role().equals("FrontDesk")) {
                         frontDesk = e;
-                        break;
                     }
                 }
 
                 // Call the checkout system
                 CheckSystemController.RunCheckOut(frontDesk);
+                Thread.sleep(90000);
                 break;
             }
-
             else if(choice.equals("9")){
                 int RoomNumber = 10;
                 int i = 0;
