@@ -26,6 +26,10 @@ public class GuestSession implements CheckingProcess {
             if(check){
                 System.out.println("Thank you. Give me a moment to verify your reservation");
                 Reservation reserve = ((FrontDesk) frontDesk).verifyCheckIn(guest);
+
+                if(reserve == null){
+                    break;
+                }
                 System.out.println();
                 System.out.println("Thanks for waiting, you have a reservation from " + reserve.getStartDate() + " to " + reserve.getEndDate());
                 System.out.println();
@@ -37,8 +41,6 @@ public class GuestSession implements CheckingProcess {
             System.out.println("Sorry sir, you can't verify your identity");
             break;
         }
-
-        scnr.close();
     }
 
     @Override
@@ -83,7 +85,6 @@ public class GuestSession implements CheckingProcess {
             System.out.println("It looks like you don’t have any active reservations right now.");
             System.out.println("If you’ve already checked out earlier, you’re all good.");
         }
-        scnr.close();
     }
 }
 

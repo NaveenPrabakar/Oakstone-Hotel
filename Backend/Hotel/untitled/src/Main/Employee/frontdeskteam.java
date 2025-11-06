@@ -11,6 +11,9 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
+import java.io.FileWriter;
 
 
 public class frontdeskteam extends Employee implements FrontDesk{
@@ -28,6 +31,10 @@ public class frontdeskteam extends Employee implements FrontDesk{
     private static final String PAST_RESERVATIONS = "Past_Reservation.txt";
 
     private static Housekeeping HousekeepingManager;
+
+    private static final BlockingQueue<Runnable> requestQueue = new LinkedBlockingQueue<Runnable>();
+    private static String frontDeskPerson = null;
+
     public frontdeskteam(int id, String name) {
         super(id, name, "FrontDesk");
     }
@@ -55,13 +62,16 @@ public class frontdeskteam extends Employee implements FrontDesk{
                 String endDate = reserve[4];
 
                 if(name.equals(guest.getName())){
-                    return new Reservation(
-                            revid,
-                            name,
-                            Integer.parseInt(roomnumber),
-                            LocalDate.parse(startDate),
-                            LocalDate.parse(endDate)
-                    );
+                    LocalDate actualCheckIn = LocalDate.now();
+                    if(actualCheckIn.compareTo(LocalDate.parse(startDate)) < 0){
+                        System.out.println("Sorry sir, you've arrvied to early of your check in on " + startDate);
+                        return null;
+                    }
+                    else if(actualCheckIn.compareTo((LocalDate.parse(endDate))) > 0){
+                        System.out.println("Sorry, you arrived past the end of your booking");
+                        return null;
+                    }
+                    return new Reservation(revid, name, Integer.parseInt(roomnumber), LocalDate.parse(startDate), LocalDate.parse(endDate));
 
                 }
             }
@@ -105,8 +115,9 @@ public class frontdeskteam extends Employee implements FrontDesk{
 
         //Record the card has been issued
         try{
-            PrintWriter write = new PrintWriter(log);
-            write.write(keycard.toString());
+            FileWriter f = new FileWriter(log, true);
+            PrintWriter write = new PrintWriter(f);
+            write.println(keycard.toString());
             write.close();
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -172,8 +183,12 @@ public class frontdeskteam extends Employee implements FrontDesk{
         // Revoke keycard for this guest
         revokeKeyCard(roomNumber, guest);
         room roomToClean = alertCleaningStaff(roomNumber);
+
+
         HousekeepingManager.addToCleanQueue(roomToClean);
+        System.out.println();
         System.out.println(roomToClean.getRoomNumber() + " " + roomToClean.getType());
+        System.out.println();
 
         return true;
     }
@@ -230,11 +245,40 @@ public class frontdeskteam extends Employee implements FrontDesk{
                 }
             }
             room room = new room(roomNumber,typeOfRoom,null,null,null);
+            System.out.println();
             System.out.println("Alerting the cleaning staff to clean room " + room.getRoomNumber());
+            System.out.println();
             return room;
         }
         catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    //Ticket System
+    public static void addToQueue(Runnable task) {
+        requestQueue.add(task);
+    }
+
+    //Process Tickets
+    public static void processQueue(String staffName) {
+        frontDeskPerson = staffName;
+        System.out.println();
+        System.out.println(staffName + " logged in at the front desk.");
+        System.out.println();
+
+        while (!requestQueue.isEmpty() && frontDeskPerson != null) {
+            try {
+                Runnable task = requestQueue.take();
+                System.out.println(staffName + " is now handling a guest request");
+                System.out.println();
+                task.run();
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                break;
+            }
+        }
+
+        frontDeskPerson = null;
     }
 }

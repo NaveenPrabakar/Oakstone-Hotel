@@ -7,3 +7,9 @@ Nick Hello,123
 George Frank,234
 Pranav Mss,456
 Naveen Prabakar,1
+Naruto Uzumaki,1
+Sasuke Uchiha,1
+Boruto Uzumaki,1
+Sarada Uchiha,1
+Naruto Good,2
+Naren Prabakar,1

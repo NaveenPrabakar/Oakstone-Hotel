@@ -86,7 +86,7 @@ public class Main {
 
                 // Call the checkout system
                 CheckSystemController.RunCheckOut(frontDesk);
-                Thread.sleep(90000);
+                //Thread.sleep(90000);
 
             } else if (choice.equals("0")) {
                 break;
@@ -104,17 +104,21 @@ public class Main {
                     RoomNumber += 1;
                 }
 
-            } else {
+            }else if (choice.equals("4")) {
+                System.out.print("Enter your name to log in: ");
+                String name = sc.nextLine().trim();
+                frontdeskteam.processQueue(name);
+            }
+            else if (choice.equals("5")) {
+                System.out.print("Enter your name to log in as cleaner: ");
+                String cleanerName = sc.nextLine().trim();
+                Housekeeping.processCleaning(cleanerName);
+            }
+            else {
                 System.out.println("That's not an option try again");
                 continue;
             }
-
-            if (running) {
-                System.out.println("\nPress Enter to return to main menu...");
-                sc.nextLine();
-            }
         }
-        scnr.close();
     }
 
     private static void printMenu() {
