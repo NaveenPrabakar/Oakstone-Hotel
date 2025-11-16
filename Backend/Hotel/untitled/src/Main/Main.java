@@ -185,7 +185,7 @@ public class Main {
         String hotel = sc.nextLine().trim();
 
         if (hotel.isEmpty()) {
-            System.out.println("❌ No location entered. Returning to menu.");
+            System.out.println("No location entered. Returning to menu.");
             return;
         }
 
