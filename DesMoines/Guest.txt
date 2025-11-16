@@ -18,3 +18,4 @@ Naruto Uzumai,1
 Naruto Uzu,1
 Iowa Car,45678
 Boruto Uzuamki,1
+Pranava,112345

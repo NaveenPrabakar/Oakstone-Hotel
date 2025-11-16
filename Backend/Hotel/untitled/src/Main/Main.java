@@ -29,11 +29,23 @@ public class Main {
             if (userType.equals("G")) {
                 runGuestPortal(sc);
             }
+//            else if (userType.equals("W")) {
+//                System.out.print("Enter the Hotel Address you’re working at: ");
+//                String hotelAddress = sc.nextLine().trim();
+//                HOTEL_PATH = hotelAddress.isEmpty() ? "123 Main St, Iowa" : hotelAddress;
+//                runWorkerPortal(sc, HOTEL_PATH);
+//            }
             else if (userType.equals("W")) {
-                System.out.print("Enter the Hotel Address you’re working at: ");
+
+                System.out.print("Enter the Hotel Address you're working at: ");
                 String hotelAddress = sc.nextLine().trim();
                 HOTEL_PATH = hotelAddress.isEmpty() ? "123 Main St, Iowa" : hotelAddress;
-                runWorkerPortal(sc, HOTEL_PATH);
+
+                Employee worker = WorkerLoginController.loginWorker(sc);
+
+                if (worker != null) {
+                    runWorkerPortal(sc, HOTEL_PATH, worker);
+                }
             }
             else if (userType.equals("Q")) {
                 System.out.println("Exiting system... Goodbye!");
@@ -85,7 +97,9 @@ public class Main {
     // ============================================================
     //  Worker Portal (Employees, Data Team, Executives, etc.)
     // ============================================================
-    private static void runWorkerPortal(Scanner sc, String hotelAddress) throws FileNotFoundException, InterruptedException {
+    private static void runWorkerPortal(Scanner sc, String hotelAddress, Employee loggedIn) throws FileNotFoundException, InterruptedException {
+        // System.out.println("Logged in as: " + loggedIn.getName() + " (" + loggedIn.role() + ")");
+
         boolean running = true;
 
         File file = new File(Main.HOTEL_PATH + "/" + "Employee.txt");
@@ -137,26 +151,26 @@ public class Main {
                 CheckSystemController.RunCheckOut(frontDesk);
 
             } else if (choice.equals("4")) {
-                System.out.print("Enter your name to log in: ");
-                String name = sc.nextLine().trim();
+//                System.out.print("Enter your name to log in: ");
+                String name = loggedIn.getName();
                 frontdeskteam.processQueue(name);
 
             } else if (choice.equals("5")) {
-                System.out.print("Enter your name to log in as cleaner: ");
-                String cleanerName = sc.nextLine().trim();
+//                System.out.print("Enter your name to log in as cleaner: ");
+                String cleanerName = loggedIn.getName();
                 Housekeeping.processCleaning(cleanerName);
 
             } else if (choice.equals("6")) {
                 handleRoomAccess(sc);
 
             } else if (choice.equals("7")) {
-                System.out.print("Enter your name to log in as Executive: ");
-                String name = sc.nextLine().trim();
+//                System.out.print("Enter your name to log in as Executive: ");
+                String name = loggedIn.getName();
                 ExecutiveController.runExecutivePanel(name);
 
             } else if (choice.equals("8")) {
-                System.out.print("Enter your name to log in as Data Team member: ");
-                String name = sc.nextLine().trim();
+//                System.out.print("Enter your name to log in as Data Team member: ");
+                String name = loggedIn.getName();
                 DataTeamController.runDataAnalysis(name);
 
             } else if (choice.equals("0")) {
@@ -185,7 +199,7 @@ public class Main {
         String hotel = sc.nextLine().trim();
 
         if (hotel.isEmpty()) {
-            System.out.println("No location entered. Returning to menu.");
+            System.out.println("❌ No location entered. Returning to menu.");
             return;
         }
 
