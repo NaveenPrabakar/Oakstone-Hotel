@@ -3,7 +3,7 @@ package Main.Employee;
 import Main.Guest.*;
 import Main.Booking.*;
 import Main.Room.room;
-
+import Main.*;
 import java.io.*;
 import java.time.LocalDate;
 
@@ -19,20 +19,21 @@ import java.io.FileWriter;
 public class frontdeskteam extends Employee implements FrontDesk{
 
     //access to the Guest Database
-    private static String GUESTS = "Guest.txt";
+    private static String GUESTS = Main.HOTEL_PATH + "/" + "Guest.txt";
 
     //access to reservation Database
-    private static final String RESERVATION = "Reservation.txt";
+    private static final String RESERVATION = Main.HOTEL_PATH + "/" + "Reservation.txt";
 
     //access to keycard Database
-    private static final String KEYCARD = "Keycard.txt";
+    private static final String KEYCARD = Main.HOTEL_PATH + "/" + "Keycard.txt";
 
     //access to past reservations
-    private static final String PAST_RESERVATIONS = "Past_Reservation.txt";
+    private static final String PAST_RESERVATIONS = Main.HOTEL_PATH + "/" + "Past_Reservation.txt";
 
     private static Housekeeping HousekeepingManager;
 
-    private static final BlockingQueue<Runnable> requestQueue = new LinkedBlockingQueue<Runnable>();
+    private static final BlockingQueue<DeskTask> requestQueue = new LinkedBlockingQueue<>();
+
     private static String frontDeskPerson = null;
 
     public frontdeskteam(int id, String name) {
@@ -205,7 +206,9 @@ public class frontdeskteam extends Employee implements FrontDesk{
 
                 String[] record = line.split("\\s+");
                 int recordedRoom = Integer.parseInt(record[0]);
-                String recordedGuest = record[2] + " " + record[3];
+                String recordedGuest = null;
+                if (record.length == 4) recordedGuest = record[2] + " " + record[3];
+                else recordedGuest = record[2];
 
                 // Remove only the matching keycard
                 if (!(recordedRoom == roomNumber && guest.getName().equals(recordedGuest))) {
@@ -229,7 +232,7 @@ public class frontdeskteam extends Employee implements FrontDesk{
     @Override
     public room alertCleaningStaff(int roomNumber) {
         try {
-            Scanner scnr = new Scanner(new File("Room.txt"));
+            Scanner scnr = new Scanner(new File(Main.HOTEL_PATH + "/"+"Room.txt"));
             boolean roomMatch = false;
             String typeOfRoom = null;
             while (!roomMatch) {
@@ -244,7 +247,7 @@ public class frontdeskteam extends Employee implements FrontDesk{
                     roomMatch = true;
                 }
             }
-            room room = new room(roomNumber,typeOfRoom,null,null,null);
+            room room = new room(Main.HOTEL_PATH, roomNumber,typeOfRoom,null,null,null);
             System.out.println();
             System.out.println("Alerting the cleaning staff to clean room " + room.getRoomNumber());
             System.out.println();
@@ -255,30 +258,50 @@ public class frontdeskteam extends Employee implements FrontDesk{
         }
     }
 
-    //Ticket System
-    public static void addToQueue(Runnable task) {
-        requestQueue.add(task);
+    public static void addToQueue(Runnable task, String hotelPath) {
+        requestQueue.add(new DeskTask(task, hotelPath));
     }
 
-    //Process Tickets
     public static void processQueue(String staffName) {
+        String hotelPath = Main.HOTEL_PATH;
         frontDeskPerson = staffName;
+
         System.out.println();
-        System.out.println(staffName + " logged in at the front desk.");
+        System.out.println(staffName + " logged in at the front desk for " + hotelPath);
         System.out.println();
 
-        while (!requestQueue.isEmpty() && frontDeskPerson != null) {
+        int skipped = 0;
+
+        while (!requestQueue.isEmpty()) {
             try {
-                Runnable task = requestQueue.take();
-                System.out.println(staffName + " is now handling a guest request");
-                System.out.println();
-                task.run();
+                DeskTask deskTask = requestQueue.take();
+                System.out.println(deskTask.getHotelPath());
+                System.out.println(hotelPath);
+
+                if (!deskTask.getHotelPath().equals(hotelPath)) {
+                    requestQueue.add(deskTask);
+                    skipped++;
+
+                    if (skipped >= requestQueue.size()) {
+                        System.out.println("No pending requests for " + hotelPath + ".");
+                        break;
+                    }
+
+                    continue;
+                }
+
+                skipped = 0; // reset skip counter when we find a valid task
+                System.out.println(staffName + " is handling a guest request at " + hotelPath);
+                deskTask.getTask().run();
+
             } catch (InterruptedException e) {
                 Thread.currentThread().interrupt();
                 break;
             }
         }
 
+        System.out.println("All matching requests completed for " + hotelPath + ".");
         frontDeskPerson = null;
     }
 }
+

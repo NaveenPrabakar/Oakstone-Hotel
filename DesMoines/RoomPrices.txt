@@ -1,0 +1,5 @@
+Hotel Address: 123 Main St, Iowa
+===== Room Prices =====
+Suite,200.0
+Single,150.0
+Double,125.0

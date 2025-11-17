@@ -1,3 +1,0 @@
-reservationId,guestName,roomNumber,startDate,endDate
-225dc0f1-0604-4b22-bcce-ab2878a17d72,Naveen Prabakar,102,2025-12-16,2025-12-18
-bf873efb-f6cc-49ff-977d-8620be78da43,Naruto Uzumaki,103,2025-12-16,2025-12-17

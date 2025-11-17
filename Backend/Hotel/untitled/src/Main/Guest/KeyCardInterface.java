@@ -8,10 +8,7 @@ import Main.Room.room;
  */
 public interface KeyCardInterface {
     RoomAccessResult authenticateAndUnlock(Guest guest, room targetRoom);
-
     int getRoomnumber();
-
     boolean getStatus();
-
     Guest getOwner();
 }

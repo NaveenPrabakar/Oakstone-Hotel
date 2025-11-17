@@ -1,0 +1,8 @@
+# Bill file for Room 104
+# Guest: Ladd M
+# Created: 2025-11-17 01:39:59
+# Format: DESCRIPTION,AMOUNT
+# Reopened bill for Theo Johnson @ 2025-11-17 02:19:28
+# Reopened bill for Laphy Kraft @ 2025-11-17 02:39:23
+MiniBar,2.00
+Roomservice,13.00

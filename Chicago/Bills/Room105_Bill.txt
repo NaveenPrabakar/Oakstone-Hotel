@@ -1,0 +1,4 @@
+# Bill file for Room 105
+# Guest: Alice Johnson
+# Created: 2025-11-17 02:03:45
+# Format: DESCRIPTION,AMOUNT

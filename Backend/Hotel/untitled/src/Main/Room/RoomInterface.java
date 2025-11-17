@@ -1,4 +1,5 @@
 package Main.Room;
+
 import Main.Guest.Guest;
 
 public interface RoomInterface {
