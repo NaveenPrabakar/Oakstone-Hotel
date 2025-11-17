@@ -44,6 +44,7 @@ public class Main {
                 Employee worker = WorkerLoginController.loginWorker(sc);
 
                 if (worker != null) {
+                    initializeEmployeeManagers();
                     runWorkerPortal(sc, HOTEL_PATH, worker);
                 }
             }
@@ -57,6 +58,38 @@ public class Main {
         }
 
         sc.close();
+    }
+
+    private static void initializeEmployeeManagers() throws FileNotFoundException {
+
+        File file = new File(Main.HOTEL_PATH + "/" + "Employee.txt");
+        Scanner scnr = new Scanner(file);
+
+        frontdeskteam FDManager = null;
+        Housekeeping HKManager = null;
+
+        while (scnr.hasNextLine()) {
+            String line = scnr.nextLine();
+            String[] e = line.split(" ");
+            if (e.length < 4) continue;
+
+            int id = Integer.parseInt(e[0]);
+            String name = e[1] + " " + e[2];
+            String role = e[3];
+
+            if (role.equals("FrontDesk")) {
+                FDManager = new frontdeskteam(id, name);
+            }
+            else if (role.equals("Cleaner")) {
+                HKManager = new Housekeeping(id, name);
+            }
+        }
+
+        if (FDManager != null && HKManager != null) {
+            FDManager.addHouseKeepingManager(HKManager);
+        } else {
+            System.out.println("WARNING: Could not link managers.");
+        }
     }
 
     private static void runGuestPortal(Scanner sc) throws FileNotFoundException, InterruptedException {
@@ -414,5 +447,7 @@ public class Main {
         private String rebuildName(String[] tokens) {
             return String.join(" ", Arrays.copyOfRange(tokens, 2, tokens.length));
         }
+
+
     }
 }
