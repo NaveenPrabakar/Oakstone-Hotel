@@ -11,7 +11,6 @@ public class Hotel {
     public Hotel(String address) {
         this.address = address;
         this.roomPrices = new HashMap<>();
-
         roomPrices.put("Single", 100.0);
         roomPrices.put("Double", 150.0);
         roomPrices.put("Suite", 250.0);
@@ -38,8 +37,8 @@ public class Hotel {
 
     public void setPrices() {
         Scanner sc = new Scanner(System.in);
-
         System.out.println("\n===== SET ROOM PRICES =====");
+
         for (String type : roomPrices.keySet()) {
             System.out.print("Enter new price for " + type + " room (current: $" + roomPrices.get(type) + "): ");
             String input = sc.nextLine().trim();
@@ -59,9 +58,11 @@ public class Hotel {
             java.io.PrintWriter writer = new java.io.PrintWriter("RoomPrices.txt");
             writer.println("Hotel Address: " + address);
             writer.println("===== Room Prices =====");
+
             for (Map.Entry<String, Double> entry : roomPrices.entrySet()) {
                 writer.println(entry.getKey() + "," + entry.getValue());
             }
+
             writer.close();
             System.out.println("Room prices saved to RoomPrices.txt");
         } catch (Exception e) {
@@ -75,6 +76,7 @@ public class Hotel {
             if (!file.exists()) return;
 
             java.util.Scanner sc = new java.util.Scanner(file);
+
             while (sc.hasNextLine()) {
                 String line = sc.nextLine();
                 if (line.contains(",")) {
@@ -84,6 +86,7 @@ public class Hotel {
                     roomPrices.put(type, price);
                 }
             }
+
             sc.close();
             System.out.println("Room prices loaded from file.");
         } catch (Exception e) {
@@ -91,4 +94,3 @@ public class Hotel {
         }
     }
 }
-

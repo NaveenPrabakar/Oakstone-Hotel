@@ -6,9 +6,7 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class EmployeeLoginService {
-
     public static Employee login(String username, String password) throws FileNotFoundException {
-
         File file = new File(Main.HOTEL_PATH + "/" + "Employee.txt");
 
         if (!file.exists()) {
@@ -19,7 +17,6 @@ public class EmployeeLoginService {
         Scanner sc = new Scanner(file);
 
         while (sc.hasNextLine()) {
-
             String[] tokens = sc.nextLine().split("\\s+");
             if (tokens.length < 6) continue;
 
@@ -32,10 +29,14 @@ public class EmployeeLoginService {
             if (storedUsername.equals(username) && storedPassword.equals(password)) {
                 // Build correct employee class
                 switch (role) {
-                    case "FrontDesk": return new frontdeskteam(id, fullName);
-                    case "Cleaner": return new Housekeeping(id, fullName);
-                    case "Executive": return new ExecutivePanel(id, fullName, role);
-                    case "DataTeam": return new DataPanel(id, fullName, role);
+                    case "FrontDesk":
+                        return new frontdeskteam(id, fullName);
+                    case "Cleaner":
+                        return new Housekeeping(id, fullName);
+                    case "Executive":
+                        return new ExecutivePanel(id, fullName, role);
+                    case "DataTeam":
+                        return new DataPanel(id, fullName, role);
                 }
             }
         }

@@ -32,6 +32,7 @@ public class ExecutivePanel extends Employee implements ExecutiveTeam {
                 System.out.println(line);
             }
             fileReader.close();
+
             System.out.println("--------------------------------------------------");
             System.out.println("End of Report.");
 
@@ -42,6 +43,7 @@ public class ExecutivePanel extends Employee implements ExecutiveTeam {
 
     public void askDataTeam() {
         Scanner sc = new Scanner(System.in);
+
         System.out.println("\n===== REQUEST DATA TEAM REPORT =====");
         System.out.print("Enter what you need a report on: ");
         String request = sc.nextLine().trim();
@@ -68,5 +70,4 @@ public class ExecutivePanel extends Employee implements ExecutiveTeam {
         hotel.setPrices();
         hotel.savePricesToFile();
     }
-
 }

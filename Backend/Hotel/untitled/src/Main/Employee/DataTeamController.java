@@ -3,7 +3,6 @@ package Main.Employee;
 import java.util.Scanner;
 
 public class DataTeamController {
-
     public static void runDataAnalysis(String analystName) {
         Scanner sc = new Scanner(System.in);
         DataPanel analyst = new DataPanel(2001, analystName, "Data Team");
@@ -28,26 +27,20 @@ public class DataTeamController {
 
             if (choice.equals("1")) {
                 analyst.pullData();
-            }
-            else if (choice.equals("2")) {
+            } else if (choice.equals("2")) {
                 analyst.analyzeData();
-            }
-            else if (choice.equals("3")) {
+            } else if (choice.equals("3")) {
                 analyst.writeReport();
-            }
-            else if (choice.equals("4")) {
+            } else if (choice.equals("4")) {
                 DataPanel.viewRequests();
-            }
-            else if (choice.equals("5")) {
+            } else if (choice.equals("5")) {
                 DataPanel.viewRequests();
                 System.out.print("Enter ticket number to mark complete: ");
                 int index = Integer.parseInt(sc.nextLine());
                 DataPanel.completeRequest(index);
-            }
-            else if (choice.equals("6")) {
+            } else if (choice.equals("6")) {
                 running = false;
-            }
-            else {
+            } else {
                 System.out.println("Invalid choice. Please enter 1–6.");
             }
         }

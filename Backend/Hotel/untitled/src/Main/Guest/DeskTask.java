@@ -17,4 +17,3 @@ public class DeskTask {
         return hotelPath;
     }
 }
-

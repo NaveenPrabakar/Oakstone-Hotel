@@ -1,0 +1,24 @@
+# Bill file for Room 106
+# Guest: Jake Bates
+# Created: 2025-11-17 02:52:13
+# Format: DESCRIPTION,AMOUNT
+MiniBar,2.00
+RoomService,5.00
+RoomService,5.00
+# Reopened bill for Will Code @ 2025-11-17 13:52:54
+MiniBar,2.00
+RoomService,5.00
+RoomService,5.00
+# Guest: Breece Hall @ 2025-11-17 14:16:13
+MiniBar,2.00
+# Guest: Ray Davis @ 2025-11-17 14:27:21
+RoomService,5.00
+# Guest: Joe Burrow @ 2025-11-17 14:41:31
+MiniBar,2.00
+RoomService,5.00
+# Guest: Caleb Williams @ 2025-11-17 14:53:15
+MiniBar,2.00
+# Guest: Malik Nabers @ 2025-11-17 15:27:20
+Water,1.00
+Chips,2.00
+Salad,6.00

@@ -2,3 +2,6 @@ roomNumber,type
 101,Single
 102,Double
 103,Suite
+104,Double
+105,Single
+106,Suite
