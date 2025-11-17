@@ -206,7 +206,9 @@ public class frontdeskteam extends Employee implements FrontDesk{
 
                 String[] record = line.split("\\s+");
                 int recordedRoom = Integer.parseInt(record[0]);
-                String recordedGuest = record[2] + " " + record[3];
+                String recordedGuest = null;
+                if (record.length == 4) recordedGuest = record[2] + " " + record[3];
+                else recordedGuest = record[2];
 
                 // Remove only the matching keycard
                 if (!(recordedRoom == roomNumber && guest.getName().equals(recordedGuest))) {
