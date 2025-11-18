@@ -1,8 +1,10 @@
-package Main.Guest;
+package Main.Controller;
 
 import Main.Employee.Employee;
 import Main.Employee.frontdeskteam;
 import Main.*;
+import Main.Guest.GuestSession;
+
 import java.util.Scanner;
 
 public class CheckSystemController {

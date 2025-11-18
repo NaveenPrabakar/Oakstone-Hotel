@@ -1,5 +1,6 @@
-package Main.Employee;
+package Main.Controller;
 
+import Main.Employee.*;
 import Main.Main;
 import java.io.File;
 import java.io.FileNotFoundException;
