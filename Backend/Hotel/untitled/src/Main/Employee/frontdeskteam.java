@@ -267,16 +267,12 @@ public class frontdeskteam extends Employee implements FrontDesk{
         frontDeskPerson = staffName;
 
         System.out.println();
-        System.out.println(staffName + " logged in at the front desk for " + hotelPath);
-        System.out.println();
 
         int skipped = 0;
 
         while (!requestQueue.isEmpty()) {
             try {
                 DeskTask deskTask = requestQueue.take();
-                System.out.println(deskTask.getHotelPath());
-                System.out.println(hotelPath);
 
                 if (!deskTask.getHotelPath().equals(hotelPath)) {
                     requestQueue.add(deskTask);

@@ -105,27 +105,147 @@ public class BillManager {
 
         try {
             List<String[]> items = readLastSessionForGuest(room, guestName);
-            System.out.println("\n===== BILL FOR " + guestName + " (ROOM " + room + ") =====");
             if (items.isEmpty()) {
                 System.out.println("No charges recorded for this guest.");
-            } else {
-                double total = 0;
-                for (String[] it : items) {
-                    double amt = 0;
-                    try {
-                        if (it.length == 2 && it[0].equals("SECURITY_DEPOSIT")) {
-                            amt = Double.parseDouble(it[1]);
-                        } else if (it.length == 3 && it[0].equals("ROOM_CHARGE")){
-                            amt = Double.parseDouble(it[2]);
-                        }
-                    } catch (NumberFormatException ignored) {}
-                    System.out.printf(Locale.US, "%-25s $%7.2f%n", it[0], amt);
-                    total += amt;
-                }
-                System.out.println("----------------------------------------");
-                System.out.printf(Locale.US, "%-25s $%7.2f%n", "TOTAL", total);
+                return;
             }
-        } catch (IOException e) {
+
+            final int WIDTH = 37;
+
+            // ---------- HEADER ----------
+            System.out.println("=".repeat(WIDTH+5));
+            String header1 = "FINAL BILL - ROOM " + room;
+            String header2 = "Guest: " + guestName;
+
+            int pad1 = (WIDTH - header1.length()) / 2;
+            int pad2 = (WIDTH - header2.length()) / 2;
+
+            if (pad1 < 0) pad1 = 0;
+            if (pad2 < 0) pad2 = 0;
+
+            System.out.println(" ".repeat(pad1) + header1);
+            System.out.println(" ".repeat(pad2) + header2);
+            System.out.println("=".repeat(WIDTH+5));
+            System.out.println();
+
+            // ---- Group charges ----
+            double securityDeposit = 0;
+            List<String[]> roomCharges = new ArrayList<>();
+            List<String[]> minibarCharges = new ArrayList<>();
+            List<String[]> roomServiceCharges = new ArrayList<>();
+
+            for (String[] it : items) {
+                switch (it[0]) {
+                    case "SECURITY_DEPOSIT":
+                        securityDeposit += Double.parseDouble(it[1]);
+                        break;
+
+                    case "ROOM_CHARGE":
+                        roomCharges.add(it);
+                        break;
+
+                    case "Water":
+                    case "Soda":
+                    case "Chips":
+                    case "Chocolate":
+                        minibarCharges.add(it);
+                        break;
+
+                    case "Sandwich":
+                    case "Salad":
+                    case "Pizza":
+                    case "Coffee":
+                        roomServiceCharges.add(it);
+                        break;
+                }
+            }
+
+            double subtotal = 0.0;
+
+            // ---------- SECURITY DEPOSIT ----------
+            if (securityDeposit > 0) {
+                int pad = (WIDTH - "SECURITY DEPOSIT".length() - 10) / 2;
+                if (pad < 0) pad = 0;
+                System.out.println("=".repeat(pad+4) + "==== SECURITY DEPOSIT " + "=".repeat(pad + 6));
+
+                System.out.printf("%12s %28s%n",
+                        "Deposit", String.format("$%7.2f", securityDeposit));
+
+                subtotal += securityDeposit;
+            }
+
+            // ---------- ROOM CHARGES ----------
+            if (!roomCharges.isEmpty()) {
+                int pad = (WIDTH - "ROOM CHARGES".length() - 10) / 2;
+                if (pad < 0) pad = 0;
+                System.out.println("=".repeat(pad+4) + "==== ROOM CHARGES " + "=".repeat(pad+6));
+
+                for (String[] rc : roomCharges) {
+                    double amt = Double.parseDouble(rc[2]);
+                    System.out.printf("%12s %28s%n",
+                            rc[1], String.format("$%7.2f", amt));
+                    subtotal += amt;
+                }
+            }
+
+            // ---------- MINI BAR ----------
+            if (!minibarCharges.isEmpty()) {
+                int pad = (WIDTH - "MINI BAR".length() - 10) / 2;
+                if (pad < 0) pad = 0;
+                System.out.println("=".repeat(pad+4) + "==== MINI BAR " + "=".repeat(pad+6));
+
+                for (String[] mb : minibarCharges) {
+                    double amt = Double.parseDouble(mb[1]);
+                    System.out.printf("%12s %28s%n",
+                            mb[0], String.format("$%7.2f", amt));
+                    subtotal += amt;
+                }
+            }
+
+            // ---------- ROOM SERVICE ----------
+            if (!roomServiceCharges.isEmpty()) {
+                int pad = (WIDTH - "ROOM SERVICE".length() - 10) / 2;
+                if (pad < 0) pad = 0;
+                System.out.println("=".repeat(pad+4) + "==== ROOM SERVICE " + "=".repeat(pad+6));
+
+                for (String[] rs : roomServiceCharges) {
+                    double amt = Double.parseDouble(rs[1]);
+                    System.out.printf("%12s %28s%n",
+                            rs[0], String.format("$%7.2f", amt));
+                    subtotal += amt;
+                }
+            }
+
+            // ---------- SUBTOTAL ----------
+            System.out.println("-".repeat(WIDTH+5));
+            System.out.printf("%12s %28s%n",
+                    "SUBTOTAL", String.format("$%7.2f", subtotal));
+
+            // ---------- TAX ----------
+            double taxRate = 0;
+
+            if (Main.HOTEL_PATH.equals("Chicago")) {
+                taxRate = 0.06 + 0.045 + 0.06 + 0.025 + 0.02 + 0.01;
+            } else if (Main.HOTEL_PATH.equals("DesMoines")) {
+                taxRate = 0.05 + 0.07;
+            }
+
+            double taxAmount = subtotal * taxRate;
+
+            System.out.printf("%12s %28s%n",
+                    "TAX", String.format("$%7.2f", taxAmount));
+
+            System.out.println("-".repeat(WIDTH+5));
+
+            // ---------- GRAND TOTAL ----------
+            double grandTotal = subtotal + taxAmount;
+            System.out.printf("%12s %28s%n",
+                    "GRAND TOTAL", String.format("$%7.2f", grandTotal));
+
+            System.out.println("=".repeat(WIDTH+5));
+            System.out.println();
+
+        } catch (Exception e) {
             System.out.println("Error reading bill: " + e.getMessage());
         }
     }
