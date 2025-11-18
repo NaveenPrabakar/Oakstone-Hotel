@@ -20,7 +20,8 @@ public class DataTeamController {
             System.out.println("3. Write Report");
             System.out.println("4. View Tickets");
             System.out.println("5. Mark Ticket as Completed");
-            System.out.println("6. Exit Data Panel");
+            System.out.println("6. Delete Reports");
+            System.out.println("7. Exit Data Panel");
             System.out.print("Enter your choice: ");
 
             String choice = sc.nextLine().trim();
@@ -38,9 +39,12 @@ public class DataTeamController {
                 System.out.print("Enter ticket number to mark complete: ");
                 int index = Integer.parseInt(sc.nextLine());
                 DataPanel.completeRequest(index);
-            } else if (choice.equals("6")) {
+            } else if (choice.equals("7")) {
                 running = false;
-            } else {
+            } else if (choice.equals("6")){
+                analyst.deleteReport();
+            }
+            else {
                 System.out.println("Invalid choice. Please enter 1–6.");
             }
         }

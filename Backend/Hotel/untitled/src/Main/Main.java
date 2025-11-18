@@ -52,6 +52,7 @@ public class Main {
         }
 
         sc.close();
+
     }
 
     private static void initializeEmployeeManagers() throws FileNotFoundException {

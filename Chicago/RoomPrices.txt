@@ -1,5 +1,5 @@
-Hotel Address: 123 Main St, Iowa
+Hotel Address: Chicago
 ===== Room Prices =====
-Suite,200.0
-Single,150.0
-Double,125.0
+Suite,250.0
+Single,175.0
+Double,150.0
