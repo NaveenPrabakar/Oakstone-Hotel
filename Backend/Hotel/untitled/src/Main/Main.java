@@ -28,12 +28,6 @@ public class Main {
             if (userType.equals("G")) {
                 runGuestPortal(sc);
             }
-            // else if (userType.equals("W")) {
-            //     System.out.print("Enter the Hotel Address you're working at: ");
-            //     String hotelAddress = sc.nextLine().trim();
-            //     HOTEL_PATH = hotelAddress.isEmpty() ? "123 Main St, Iowa" : hotelAddress;
-            //     runWorkerPortal(sc, HOTEL_PATH);
-            // }
             else if (userType.equals("W")) {
                 System.out.print("Enter the Hotel Address you're working at: ");
                 String hotelAddress = sc.nextLine().trim();
@@ -125,93 +119,6 @@ public class Main {
     // ============================================================
     // Worker Portal (Employees, Data Team, Executives, etc.)
     // ============================================================
-
-    // private static void runWorkerPortal(Scanner sc, String hotelAddress, Employee loggedIn) throws FileNotFoundException, InterruptedException {
-    //
-    //     System.out.println("Logged in as: " + loggedIn.getName() + " (" + loggedIn.role() + ")");
-    //
-    //     boolean running = true;
-    //
-    //     File file = new File(Main.HOTEL_PATH + "/" + "Employee.txt");
-    //     Scanner scnr = new Scanner(file);
-    //
-    //     ArrayList<Employee> employees = new ArrayList<>();
-    //     ArrayList<Housekeeping> housekeepings = new ArrayList<>();
-    //     frontdeskteam FDManager = null;
-    //     Housekeeping HKManager = null;
-    //
-    //     // Load employee data
-    //     while (scnr.hasNextLine()) {
-    //         String line = scnr.nextLine();
-    //         String[] employee = line.split(" ");
-    //         if (employee.length < 4) continue;
-    //
-    //         int id = Integer.parseInt(employee[0]);
-    //         String name = employee[1] + employee[2];
-    //         String position = employee[3];
-    //
-    //         if (position.equals("FrontDesk")) {
-    //             FDManager = new frontdeskteam(id, name);
-    //             employees.add(FDManager);
-    //         } else if (position.equals("Cleaner")) {
-    //             HKManager = new Housekeeping(id, name);
-    //             employees.add(HKManager);
-    //         }
-    //     }
-    //
-    //     if (FDManager != null && HKManager != null) {
-    //         FDManager.addHouseKeepingManager(HKManager);
-    //     }
-    //
-    //     while (running) {
-    //         printWorkerMenu();
-    //
-    //         System.out.print("\nSelect an option (1–8) or 0 to exit: ");
-    //         String choice = sc.nextLine().trim();
-    //
-    //         if (choice.equals("1")) {
-    //             Booking.handleBooking();
-    //
-    //         } else if (choice.equals("2")) {
-    //             Employee frontDesk = new frontdeskteam(1, "FrontDesk");
-    //             CheckSystemController.RunCheckin(frontDesk);
-    //
-    //         } else if (choice.equals("3")) {
-    //
-    //             Employee frontDesk = new frontdeskteam(1, "FrontDesk");
-    //             CheckSystemController.RunCheckOut(frontDesk);
-    //
-    //         } else if (choice.equals("4")) {
-    ////             System.out.print("Enter your name to log in: ");
-    //             String name = loggedIn.getName();
-    //             frontdeskteam.processQueue(name);
-    //
-    //         } else if (choice.equals("5")) {
-    ////             System.out.print("Enter your name to log in as cleaner: ");
-    //             String cleanerName = loggedIn.getName();
-    //             Housekeeping.processCleaning(cleanerName);
-    //
-    //         } else if (choice.equals("6")) {
-    //             handleRoomAccess(sc);
-    //
-    //         } else if (choice.equals("7")) {
-    ////             System.out.print("Enter your name to log in as Executive: ");
-    //             String name = loggedIn.getName();
-    //             ExecutiveController.runExecutivePanel(name);
-    //
-    //         } else if (choice.equals("8")) {
-    ////             System.out.print("Enter your name to log in as Data Team member: ");
-    //             String name = loggedIn.getName();
-    //             DataTeamController.runDataAnalysis(name);
-    //
-    //         } else if (choice.equals("0")) {
-    //             System.out.println("Logging out of worker panel...");
-    //             running = false;
-    //         } else {
-    //             System.out.println("Invalid option. Please enter 0–8.");
-    //         }
-    //     }
-    // }
 
     private static void runWorkerPortal(Scanner sc, String hotelAddress, Employee loggedIn) throws FileNotFoundException, InterruptedException {
         System.out.println("Logged in as: " + loggedIn.getName() + " (" + loggedIn.role() + ")");
