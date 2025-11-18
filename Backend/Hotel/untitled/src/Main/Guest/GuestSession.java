@@ -3,6 +3,7 @@ package Main.Guest;
 import Main.Booking.Reservation;
 import Main.Employee.Employee;
 import Main.Employee.FrontDesk;
+import Main.Main;
 
 import java.time.LocalTime;
 import java.util.HashMap;
@@ -36,6 +37,8 @@ public class GuestSession implements CheckingProcess {
 
                 // Create a new session bill for this guest
                 BillManager.createBillForRoom(reserve.getRoomNumber(), guest.getName());
+                String location = Main.HOTEL_PATH;
+                BillingManager.initBillingForStay(reserve, guest.getName(), location);
 
                 ((FrontDesk) frontDesk).provideKeyCard(reserve.getRoomNumber(), guest);
                 System.out.println("Here is your keycard for room " + reserve.getRoomNumber());

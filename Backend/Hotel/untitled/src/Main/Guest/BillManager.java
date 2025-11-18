@@ -86,7 +86,9 @@ public class BillManager {
             }
             if (inGuestSession && !line.startsWith("#") && !line.isEmpty()) {
                 String[] parts = line.split(",");
-                if (parts.length >= 2) {
+                if (parts.length >= 3) {
+                    items.add(new String[]{parts[0].trim(), parts[1].trim(), parts[2].trim()});
+                } else {
                     items.add(new String[]{parts[0].trim(), parts[1].trim()});
                 }
             }
@@ -111,7 +113,11 @@ public class BillManager {
                 for (String[] it : items) {
                     double amt = 0;
                     try {
-                        amt = Double.parseDouble(it[1]);
+                        if (it.length == 2 && it[0].equals("SECURITY_DEPOSIT")) {
+                            amt = Double.parseDouble(it[1]);
+                        } else if (it.length == 3 && it[0].equals("ROOM_CHARGE")){
+                            amt = Double.parseDouble(it[2]);
+                        }
                     } catch (NumberFormatException ignored) {}
                     System.out.printf(Locale.US, "%-25s $%7.2f%n", it[0], amt);
                     total += amt;
