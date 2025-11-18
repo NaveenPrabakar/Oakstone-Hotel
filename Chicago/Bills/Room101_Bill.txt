@@ -1,0 +1,5 @@
+# Bill file for Room 101
+# Format: DESCRIPTION,AMOUNT
+# Guest: Naveen Prabakar @ 2025-11-17 16:14:36
+Water,1.00
+Pizza,8.00

@@ -20,6 +20,7 @@ public class ExecutiveController {
             System.out.println("3. View Current Room Prices");
             System.out.println("4. Set / Update Room Prices");
             System.out.println("5. Exit Executive Panel");
+            System.out.println("6. Notifications");
             System.out.print("Enter your choice: ");
 
             String choice = sc.nextLine().trim();
@@ -35,6 +36,8 @@ public class ExecutiveController {
             } else if (choice.equals("5")) {
                 System.out.println("Logging out of Executive Panel...");
                 running = false;
+            }else if(choice.equals("6")){
+                executive.viewNotifications();
             } else {
                 System.out.println("Invalid choice. Please enter 1–5.");
             }

@@ -1,5 +1,7 @@
 package Main.Room;
 
+import java.io.File;
+import java.io.PrintWriter;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Scanner;
@@ -11,9 +13,6 @@ public class Hotel {
     public Hotel(String address) {
         this.address = address;
         this.roomPrices = new HashMap<>();
-        roomPrices.put("Single", 100.0);
-        roomPrices.put("Double", 150.0);
-        roomPrices.put("Suite", 250.0);
     }
 
     public String getAddress() {
@@ -36,8 +35,9 @@ public class Hotel {
     }
 
     public void setPrices() {
-        Scanner sc = new Scanner(System.in);
         System.out.println("\n===== SET ROOM PRICES =====");
+
+        Scanner sc = new Scanner(System.in);
 
         for (String type : roomPrices.keySet()) {
             System.out.print("Enter new price for " + type + " room (current: $" + roomPrices.get(type) + "): ");
@@ -55,7 +55,7 @@ public class Hotel {
 
     public void savePricesToFile() {
         try {
-            java.io.PrintWriter writer = new java.io.PrintWriter("RoomPrices.txt");
+            PrintWriter writer = new PrintWriter(address+ "/" +"RoomPrices.txt");
             writer.println("Hotel Address: " + address);
             writer.println("===== Room Prices =====");
 
@@ -72,7 +72,7 @@ public class Hotel {
 
     public void loadPricesFromFile() {
         try {
-            java.io.File file = new java.io.File("RoomPrices.txt");
+            File file = new File(address+ "/" + "RoomPrices.txt");
             if (!file.exists()) return;
 
             java.util.Scanner sc = new java.util.Scanner(file);
