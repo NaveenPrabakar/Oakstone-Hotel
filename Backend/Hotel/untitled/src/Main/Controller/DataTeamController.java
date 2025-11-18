@@ -1,4 +1,6 @@
-package Main.Employee;
+package Main.Controller;
+
+import Main.Employee.DataPanel;
 
 import java.util.Scanner;
 

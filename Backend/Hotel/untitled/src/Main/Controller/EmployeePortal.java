@@ -1,4 +1,7 @@
-package Main.Employee;
+package Main.Controller;
+
+import Main.Employee.ClockSystem;
+import Main.Employee.Employee;
 
 import java.util.Scanner;
 

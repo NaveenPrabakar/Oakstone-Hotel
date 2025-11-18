@@ -1,4 +1,4 @@
-package Main.Employee;
+package Main.Controller;
 
 import java.io.FileNotFoundException;
 import java.util.Scanner;

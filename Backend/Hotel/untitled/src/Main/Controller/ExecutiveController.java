@@ -1,4 +1,6 @@
-package Main.Employee;
+package Main.Controller;
+
+import Main.Employee.ExecutivePanel;
 
 import java.util.Scanner;
 
