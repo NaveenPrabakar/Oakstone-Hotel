@@ -1,2 +1,5 @@
 *.class
 .idea/
+out/
+*.iml
+*.room
