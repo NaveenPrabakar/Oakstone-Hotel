@@ -22,4 +22,29 @@ MiniBar,2.00
 Water,1.00
 Chips,2.00
 Salad,6.00
-# Guest: Naveen Prabakar @ 2025-11-17 16:13:24
+# Guest: Syam @ 2025-11-17 17:40:47
+Water,1.00
+Pizza,8.00
+Coffee,2.00
+# Guest: Umesh @ 2025-11-17 19:39:50
+SECURITY_DEPOSIT,50.0
+ROOM_CHARGE,2025-11-17,0.0
+# Guest: Dipok Das @ 2025-11-18 10:25:09
+SECURITY_DEPOSIT,50.0
+ROOM_CHARGE,2025-11-18,250.0
+Water,1.00
+Sandwich,5.00
+Coffee,2.00
+Soda,1.50
+# Guest: MSS Pranava Sai @ 2025-11-18 11:32:14
+SECURITY_DEPOSIT,50.0
+ROOM_CHARGE,2025-11-18,250.0
+Water,1.00
+Sandwich,5.00
+Chocolate,3.00
+Coffee,2.00
+# Guest: Sree Sai @ 2025-11-18 11:47:03
+SECURITY_DEPOSIT,50.0
+ROOM_CHARGE,2025-11-18,250.0
+Soda,1.50
+Salad,6.00

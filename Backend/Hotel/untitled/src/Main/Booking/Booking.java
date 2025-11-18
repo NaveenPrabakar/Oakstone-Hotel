@@ -25,21 +25,22 @@ public class Booking implements BookingInterface {
             System.out.println((i + 1) + ". " + hotelCities.get(i));
         }
 
-        System.out.print("Select your city: ");
-        int cityChoice;
-        try {
-            cityChoice = Integer.parseInt(sc.nextLine());
-        } catch (NumberFormatException e) {
-            System.out.println("Invalid input. Returning to menu.");
+        System.out.print("Type your city: ");
+        String cityInput = sc.nextLine().trim().toLowerCase();
+
+        String selectedCity = null;
+        for (String c : hotelCities) {
+            if (c.toLowerCase().equals(cityInput)) {
+                selectedCity = c;
+                break;
+            }
+        }
+
+        if (selectedCity == null) {
+            System.out.println("Invalid city. Returning to menu.");
             return;
         }
 
-        if (cityChoice < 1 || cityChoice > hotelCities.size()) {
-            System.out.println("Invalid city selection. Returning to menu.");
-            return;
-        }
-
-        String selectedCity = hotelCities.get(cityChoice - 1);
         Main.HOTEL_PATH = selectedCity;
         ROOM_FILE = Main.HOTEL_PATH+ "/" + "Room.txt";
         RESERVATION_FILE = Main.HOTEL_PATH+ "/" + "Reservation.txt";
