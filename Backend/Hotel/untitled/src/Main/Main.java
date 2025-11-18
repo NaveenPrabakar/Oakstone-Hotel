@@ -248,11 +248,6 @@ public class Main {
                 return;
             }
 
-            System.out.println("Key cards on file:");
-            for (KeyCard card : issuedCards) {
-                System.out.println("  Room " + card.getRoomnumber() + " -> " + card.getOwner().getName());
-            }
-
             System.out.print("Room number: ");
             int roomNumber = parseNumber(input.nextLine().trim());
 
