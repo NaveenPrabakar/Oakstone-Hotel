@@ -34,6 +34,8 @@ public class EmployeeLoginService {
                         return new frontdeskteam(id, fullName);
                     case "Cleaner":
                         return new Housekeeping(id, fullName);
+                    case "Kitchen":
+                        return new KitchenPanel(id, fullName);
                     case "Executive":
                         return new ExecutivePanel(id, fullName, role);
                     case "DataTeam":

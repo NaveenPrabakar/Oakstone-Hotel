@@ -164,6 +164,14 @@ public class Main {
                     }
                     break;
 
+                case "Kitchen":
+                    if (choice.equals("1")) {
+                        KitchenPanel.processOrders(loggedIn.getName());
+                    } else {
+                        System.out.println("Invalid option for your role.");
+                    }
+                    break;
+
                 case "DataTeam":
                     if (choice.equals("1")) {
                         DataTeamController.runDataAnalysis(loggedIn.getName());
@@ -178,6 +186,8 @@ public class Main {
                     } else if (choice.equals("2")) {
                         Housekeeping.processCleaning(loggedIn.getName());
                     } else if (choice.equals("3")) {
+                        KitchenPanel.processOrders(loggedIn.getName());
+                    } else if (choice.equals("4")) {
                         ExecutiveController.runExecutivePanel(loggedIn.getName());
                     } else {
                         System.out.println("Invalid option for your role.");
@@ -211,13 +221,17 @@ public class Main {
             case "CleaningStaff":
                 System.out.println("║  1. Cleaning Panel                     ║");
                 break;
+            case "Kitchen":
+                System.out.println("║  1. Kitchen Panel                      ║");
+                break;
             case "DataTeam":
                 System.out.println("║  1. Data Team Panel                    ║");
                 break;
             case "Executive":
                 System.out.println("║  1. Front Desk Panel                   ║");
                 System.out.println("║  2. Cleaning Panel                     ║");
-                System.out.println("║  3. Executive Panel                    ║");
+                System.out.println("║  3. Kitchen Panel                      ║");
+                System.out.println("║  4. Executive Panel                    ║");
                 break;
             case "HR":
                 System.out.println("║  1. HR Panel                           ║");
@@ -309,7 +323,7 @@ public class Main {
             System.out.println(result.getMessage());
 
             if (result == RoomAccessResult.ACCESS_GRANTED) {
-                GuestSession.roomAccess(roomNumber, guestName);
+                GuestSession.roomAccess(roomNumber, guestName, targetRoom.get());
             }
         }
 
