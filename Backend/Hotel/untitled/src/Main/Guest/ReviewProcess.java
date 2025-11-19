@@ -93,7 +93,7 @@ public class ReviewProcess {
                     "PENDING",                     // hrResponse (empty)  
                     "PENDING",                         // hrRespondent (empty)
                     "PENDING",                 // responseDate (empty));           
-                    "PENDING"           // status
+                    "PENDING" );          // status
         } catch (IOException e) {
             System.out.println("Error writing review: " + e.getMessage());
         }

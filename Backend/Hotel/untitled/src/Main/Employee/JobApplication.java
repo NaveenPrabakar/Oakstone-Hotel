@@ -1,14 +1,12 @@
 package Main.Employee;
 
-public interface JobApplication {
+public abstract class JobApplication {
     public String applicantName;
     public String positionApplied;
     public String resumeText;
     public String applicationDate;
     public String applicationStatus;
-
-    public void submitApplication();
-    public void reviewApplication();
-} {
     
+    public abstract void submitApplication();
+    public abstract void reviewApplication();
 }
