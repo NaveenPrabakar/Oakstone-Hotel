@@ -15,15 +15,29 @@ import Main.Room.room;
 public class Main {
     public static String HOTEL_PATH = "";
 
-
-
     public static void main(String[] args) throws FileNotFoundException, InterruptedException {
+        Random random = new Random();
+        int randomBannerNumber  = random.nextInt(4) + 1;
+        switch (randomBannerNumber) {
+            case 1:
+                printBanner1();
+                break;
+            case 2:
+                printBanner2();
+                break;
+            case 3:
+                printBanner3();
+                break;
+            case 4:
+                printBanner4();
+                break;
+        }
         Scanner sc = new Scanner(System.in);
         boolean running = true;
 
         while (running) {
             System.out.println("====================================");
-            System.out.println("  Welcome to the HOTEL ERP System  ");
+            System.out.println("  Welcome to the HOTEL OAK STONE");
             System.out.println("====================================");
             System.out.print("Are you a Guest or a Worker? (G/W) or Q to quit: ");
             String userType = sc.nextLine().trim().toUpperCase();
@@ -91,8 +105,6 @@ public class Main {
             if (e.length < 4) continue;
 
             int id = Integer.parseInt(e[0]);
-//            String name = e[1] + " " + e[2];
-//            String role = e[3];
 
             // role is always third-from-last
             String role = e[e.length - 3];
@@ -316,6 +328,72 @@ public class Main {
         new ReviewProcess(sc).execute();
     }
 
+    private static void printBanner1() {
+        System.out.println();
+        System.out.println("     $$$$$$\\   $$$$$$\\  $$\\   $$\\  $$$$$$\\ $$$$$$$$\\  $$$$$$\\  $$\\   $$\\ $$$$$$$$\\");
+        System.out.println("    $$  __$$\\ $$  __$$\\ $$ | $$  |$$  __$$\\\\__$$  __|$$  __$$\\ $$$\\  $$ |$$  _____|");
+        System.out.println("    $$ /  $$ |$$ /  $$ |$$ |$$  / $$ /  \\__|  $$ |   $$ /  $$ |$$$$\\ $$ |$$ |      ");
+        System.out.println("    $$ |  $$ |$$$$$$$$ |$$$$$  /  \\$$$$$$\\    $$ |   $$ |  $$ |$$ $$\\$$ |$$$$$\\    ");
+        System.out.println("    $$ |  $$ |$$  __$$ |$$  $$<    \\____$$\\   $$ |   $$ |  $$ |$$ \\$$$$ |$$  __|");
+        System.out.println("    $$ |  $$ |$$ |  $$ |$$ |\\$$\\  $$\\   $$ |  $$ |   $$ |  $$ |$$ |\\$$$ |$$ |");
+        System.out.println("     $$$$$$  |$$ |  $$ |$$ | \\$$\\ \\$$$$$$  |  $$ |    $$$$$$  |$$ | \\$$ |$$$$$$$$\\");
+        System.out.println("     \\______/ \\__|  \\__|\\__|  \\__| \\______/   \\__|    \\______/ \\__|  \\__|\\________|");
+        System.out.println("\n                          O   A   K   S   T   O   N   E   \n                                H   O   T   E   L\n");
+    }
+
+    private static void printBanner2() {
+        System.out.println();
+        System.out.println("   ===================================================================================");
+        System.out.println("   ===    =======  =====  ====  ===      ===        ====    ====  =======  ==        =");
+        System.out.println("   ==  ==  =====    ====  ===  ===  ====  =====  ======  ==  ===   ======  ==  =======");
+        System.out.println("   =  ====  ===  ==  ===  ==  ====  ====  =====  =====  ====  ==    =====  ==  =======");
+        System.out.println("   =  ====  ==  ====  ==  =  ======  ==========  =====  ====  ==  ==  ===  ==  =======");
+        System.out.println("   =  ====  ==  ====  ==     ========  ========  =====  ====  ==  ===  ==  ==      ===");
+        System.out.println("   =  ====  ==        ==  ==  =========  ======  =====  ====  ==  ====  =  ==  =======");
+        System.out.println("   =  ====  ==  ====  ==  ===  ===  ====  =====  =====  ====  ==  =====    ==  =======");
+        System.out.println("   ==  ==  ===  ====  ==  ====  ==  ====  =====  ======  ==  ===  ======   ==  =======");
+        System.out.println("   ===    ====  ====  ==  ====  ===      ======  =======    ====  =======  ==        =");
+        System.out.println("   ===================================================================================");
+        System.out.println("\n                          O   A   K   S   T   O   N   E   \n                                H   O   T   E   L\n");
+    }
+
+    private static void printBanner3() {
+        System.out.println();
+        System.out.println("   :'#######:::::'###::::'##:::'##::'######::'########::'#######::'##::: ##:'########:");
+        System.out.println("   '##.... ##:::'## ##::: ##::'##::'##... ##:... ##..::'##.... ##: ###:: ##: ##.....::");
+        System.out.println("    ##:::: ##::'##:. ##:: ##:'##::: ##:::..::::: ##:::: ##:::: ##: ####: ##: ##:::::::");
+        System.out.println("    ##:::: ##:'##:::. ##: #####::::. ######::::: ##:::: ##:::: ##: ## ## ##: ######:::");
+        System.out.println("    ##:::: ##: #########: ##. ##::::..... ##:::: ##:::: ##:::: ##: ##. ####: ##...::::");
+        System.out.println("    ##:::: ##: ##.... ##: ##:. ##::'##::: ##:::: ##:::: ##:::: ##: ##:. ###: ##:::::::");
+        System.out.println("   . #######:: ##:::: ##: ##::. ##:. ######::::: ##::::. #######:: ##::. ##: ########:");
+        System.out.println("   :.......:::..:::::..::..::::..:::......::::::..::::::.......:::..::::..::..........::");
+        System.out.println("\n                          O   A   K   S   T   O   N   E   \n                                H   O   T   E   L\n");
+    }
+
+    private static void printBanner4() {
+        System.out.println();
+        System.out.println("                                                                                                                                                                                     ");
+        System.out.println("                                                                                                                                                                                     ");
+        System.out.println("         OOOOOOOOO                 AAA               KKKKKKKKK    KKKKKKK   SSSSSSSSSSSSSSS TTTTTTTTTTTTTTTTTTTTTTT     OOOOOOOOO     NNNNNNNN        NNNNNNNNEEEEEEEEEEEEEEEEEEEEEE");
+        System.out.println("       OO:::::::::OO              A:::A              K:::::::K    K:::::K SS:::::::::::::::ST:::::::::::::::::::::T   OO:::::::::OO   N:::::::N       N::::::NE::::::::::::::::::::E");
+        System.out.println("     OO:::::::::::::OO           A:::::A             K:::::::K    K:::::KS:::::SSSSSS::::::ST:::::::::::::::::::::T OO:::::::::::::OO N::::::::N      N::::::NE::::::::::::::::::::E");
+        System.out.println("    O:::::::OOO:::::::O         A:::::::A            K:::::::K   K::::::KS:::::S     SSSSSSST:::::TT:::::::TT:::::TO:::::::OOO:::::::ON:::::::::N     N::::::NEE::::::EEEEEEEEE::::E");
+        System.out.println("    O::::::O   O::::::O        A:::::::::A           KK::::::K  K:::::KKKS:::::S            TTTTTT  T:::::T  TTTTTTO::::::O   O::::::ON::::::::::N    N::::::N  E:::::E       EEEEEE");
+        System.out.println("    O:::::O     O:::::O       A:::::A:::::A            K:::::K K:::::K   S:::::S                    T:::::T        O:::::O     O:::::ON:::::::::::N   N::::::N  E:::::E             ");
+        System.out.println("    O:::::O     O:::::O      A:::::A A:::::A           K::::::K:::::K     S::::SSSS                 T:::::T        O:::::O     O:::::ON:::::::N::::N  N::::::N  E::::::EEEEEEEEEE   ");
+        System.out.println("    O:::::O     O:::::O     A:::::A   A:::::A          K:::::::::::K       SS::::::SSSSS            T:::::T        O:::::O     O:::::ON::::::N N::::N N::::::N  E:::::::::::::::E   ");
+        System.out.println("    O:::::O     O:::::O    A:::::A     A:::::A         K:::::::::::K         SSS::::::::SS          T:::::T        O:::::O     O:::::ON::::::N  N::::N:::::::N  E:::::::::::::::E   ");
+        System.out.println("    O:::::O     O:::::O   A:::::AAAAAAAAA:::::A        K::::::K:::::K           SSSSSS::::S         T:::::T        O:::::O     O:::::ON::::::N   N:::::::::::N  E::::::EEEEEEEEEE   ");
+        System.out.println("    O:::::O     O:::::O  A:::::::::::::::::::::A       K:::::K K:::::K               S:::::S        T:::::T        O:::::O     O:::::ON::::::N    N::::::::::N  E:::::E             ");
+        System.out.println("    O::::::O   O::::::O A:::::AAAAAAAAAAAAA:::::A    KK::::::K  K:::::KKK            S:::::S        T:::::T        O::::::O   O::::::ON::::::N     N:::::::::N  E:::::E       EEEEEE");
+        System.out.println("    O:::::::OOO:::::::OA:::::A             A:::::A   K:::::::K   K::::::KSSSSSSS     S:::::S      TT:::::::TT      O:::::::OOO:::::::ON::::::N      N::::::::NEE::::::EEEEEEEE:::::E");
+        System.out.println("     OO:::::::::::::OOA:::::A               A:::::A  K:::::::K    K:::::KS::::::SSSSSS:::::S      T:::::::::T       OO:::::::::::::OO N::::::N       N:::::::NE::::::::::::::::::::E");
+        System.out.println("       OO:::::::::OO A:::::A                 A:::::A K:::::::K    K:::::KS:::::::::::::::SS       T:::::::::T         OO:::::::::OO   N::::::N        N::::::NE::::::::::::::::::::E");
+        System.out.println("         OOOOOOOOO  AAAAAAA                   AAAAAAAKKKKKKKKK    KKKKKKK SSSSSSSSSSSSSSS         TTTTTTTTTTT           OOOOOOOOO     NNNNNNNN         NNNNNNNEEEEEEEEEEEEEEEEEEEEEE");
+        System.out.println("                                                                                                                                                                                     ");
+        System.out.println("                                                                                                                                                                                     ");
+        System.out.println("\n                                                                              O   A   K   S   T   O   N   E   \n                                                                                     H   O   T   E   L\n");
+    }
 
 
     private static final class RoomAccessFlow {
