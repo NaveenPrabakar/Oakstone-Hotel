@@ -91,6 +91,7 @@ public class Main {
             System.out.println("║  2. Check In                       ║");
             System.out.println("║  3. Check Out                      ║");
             System.out.println("║  4. Access Room (Key Card)         ║");
+            System.out.println("║  5. Leave a review                 ║");
             System.out.println("║  0. Exit                           ║");
             System.out.println("╚════════════════════════════════════╝");
             System.out.print("Select an option: ");
@@ -107,6 +108,8 @@ public class Main {
                 CheckSystemController.RunCheckOut(null);
             } else if (choice.equals("4")) {
                 handleRoomAccess(sc);
+            } else if(choice.equals("5")){
+                leaveReview(sc);
             } else if (choice.equals("0")) {
                 System.out.println("Thank you for visiting our hotel. Goodbye!");
                 running = false;
@@ -228,6 +231,23 @@ public class Main {
         Main.HOTEL_PATH = hotel;
         new RoomAccessFlow(sc).execute();
     }
+
+    private static void leaveReview(Scanner sc){
+        System.out.print("Enter the hotel location you're accessing (e.g., Chicago, DesMoines): ");
+        String hotel = sc.nextLine().trim();
+
+        if (hotel.isEmpty()) {
+            System.out.println("❌ No location entered. Returning to menu.");
+            return;
+        }
+
+        Main.HOTEL_PATH = hotel;
+        //process assuming were giving a review to a guests experience in the hotel
+        //room itself, not the whole hotel like google reviews
+        new ReviewProcess(sc).execute();
+    }
+
+
 
     private static final class RoomAccessFlow {
         private static final String DATA_ROOT = "Backend/Hotel/untitled/src/Main/";
