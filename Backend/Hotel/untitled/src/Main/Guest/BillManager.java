@@ -86,9 +86,12 @@ public class BillManager {
             }
             if (inGuestSession && !line.startsWith("#") && !line.isEmpty()) {
                 String[] parts = line.split(",");
-                if (parts.length >= 3) {
+                if (parts.length == 3) {
                     items.add(new String[]{parts[0].trim(), parts[1].trim(), parts[2].trim()});
-                } else {
+                } else if (parts.length == 4) {
+                    items.add(new String[]{parts[0].trim(), parts[1].trim() + " " + parts[2].trim(), parts[3].trim()});
+                }
+                else {
                     items.add(new String[]{parts[0].trim(), parts[1].trim()});
                 }
             }

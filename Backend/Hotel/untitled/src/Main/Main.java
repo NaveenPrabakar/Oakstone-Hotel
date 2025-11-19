@@ -1,10 +1,13 @@
 package Main;
 
 import java.io.FileNotFoundException;
+import java.nio.file.Paths;
 import java.util.*;
 import java.io.File;
 import Main.Booking.Booking;
 import Main.Controller.*;
+import Main.Data.DataRepository;
+import Main.Data.FileDataRepository;
 import Main.Employee.*;
 import Main.Guest.*;
 import Main.Room.room;
@@ -33,12 +36,37 @@ public class Main {
                 String hotelAddress = sc.nextLine().trim();
                 HOTEL_PATH = hotelAddress.isEmpty() ? "123 Main St, Iowa" : hotelAddress;
 
-                Employee worker = WorkerLoginController.loginWorker(sc);
-                if (worker != null) {
-                    initializeEmployeeManagers();
-                    runWorkerPortal(sc, HOTEL_PATH, worker);
+                // Initialize repository for this hotel
+                DataRepository repo = new FileDataRepository(Paths.get(HOTEL_PATH));
+                EmployeeLoginService.initialize(repo);
+
+                boolean workerMenu = true;
+
+                while (workerMenu) {
+                    System.out.println("\n===== WORKER ACCESS =====");
+                    System.out.println("1. Login");
+                    System.out.println("0. Back");
+                    System.out.print("Select: ");
+
+                    String choice = sc.nextLine().trim();
+
+                    if (choice.equals("1")) {
+                        Employee worker = WorkerLoginController.loginWorker(sc);
+                        if (worker != null) {
+                            initializeEmployeeManagers();
+                            runWorkerPortal(sc, HOTEL_PATH, worker);
+                        }
+                    }
+                    else if (choice.equals("0")) {
+                        workerMenu = false;
+                    }
+                    else {
+                        System.out.println("Invalid option.");
+                    }
                 }
-            } else if (userType.equals("Q")) {
+            }
+
+            else if (userType.equals("Q")) {
                 System.out.println("Exiting system... Goodbye!");
                 running = false;
             } else {
@@ -63,8 +91,20 @@ public class Main {
             if (e.length < 4) continue;
 
             int id = Integer.parseInt(e[0]);
-            String name = e[1] + " " + e[2];
-            String role = e[3];
+//            String name = e[1] + " " + e[2];
+//            String role = e[3];
+
+            // role is always third-from-last
+            String role = e[e.length - 3];
+
+            // reconstruct name from tokens between ID and role
+            StringBuilder nameBuilder = new StringBuilder();
+            for (int i = 1; i < e.length - 3; i++) {
+                nameBuilder.append(e[i]);
+                if (i < e.length - 4) nameBuilder.append(" ");
+            }
+
+            String name = nameBuilder.toString();
 
             if (role.equals("FrontDesk")) {
                 FDManager = new frontdeskteam(id, name);
@@ -196,7 +236,11 @@ public class Main {
                 case "HR":
                     if (choice.equals("1")) {
                         HRController.runHRPanel(loggedIn.getName());
-                    } else {
+                    }
+                    else if (choice.equals("2")) {
+                        WorkerLoginController.registerNewWorker(sc);
+                    }
+                    else {
                         System.out.println("Invalid option for your role.");
                     }
                     break;
@@ -235,6 +279,7 @@ public class Main {
                 break;
             case "HR":
                 System.out.println("║  1. HR Panel                           ║");
+                System.out.println("║  2. Register New Worker                ║");
                 break;
         }
 
