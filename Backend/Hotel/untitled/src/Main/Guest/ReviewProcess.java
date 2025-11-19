@@ -5,106 +5,104 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.sql.SQLOutput;
 import java.util.Scanner;
 
 public class ReviewProcess {
-    private static final String RESERVATION = Main.HOTEL_PATH + "/" + "Reservation.txt";
-    private static final String PAST_RESERVATIONS = Main.HOTEL_PATH + "/" + "Past_Reservation.txt";
-    private static final String REVIEWS = Main.HOTEL_PATH + "/" + "reviews.txt";
+    private static final String RESERVATION = Main.HOTEL_PATH + "/Reservation.txt";
+    private static final String PAST_RESERVATIONS = Main.HOTEL_PATH + "/Past_Reservation.txt";
+    private static final String REVIEWS = Main.HOTEL_PATH + "/reviews.txt";
     private final Scanner input;
 
     public ReviewProcess(Scanner input) {
         this.input = input;
     }
 
-    public void execute(){
-        System.out.println("Thankyou for leaving a review!");
-        System.out.println("Whats your name?");
+    public void execute() {
+        System.out.println("Thank you for leaving a review!");
+        System.out.println("What's your name?");
         String name = input.nextLine().trim();
-        System.out.println("Whats your resId?");
+        System.out.println("What's your reservation ID?");
         String resId = input.nextLine().trim();
 
-        String[] customerInformation_reserved = checkReservations(RESERVATION, name, resId);
-        String[] customerInformation_past = checkReservations(PAST_RESERVATIONS, name, resId);
-
-        if(customerInformation_reserved != null ){
-            System.out.print("I have located your booking! ");
-            System.out.println("I can see that youre going to stay with us until "+ customerInformation_reserved[4] );
-        }else if(customerInformation_past != null ){
-            System.out.print("I have located your booking! ");
-            System.out.println("I can see that you stayed with us until "+ customerInformation_past[4]);
-        }else{
-            System.out.println("Sorry i cant find your reservation");
+        String[] customerInformation = findReservation(name, resId);
+        
+        if (customerInformation == null) {
+            System.out.println("Sorry, I can't find your reservation.");
             return;
         }
-        String[] customerInfo = customerInformation_reserved != null ? customerInformation_reserved: customerInformation_past;
 
-        // --- STAR RATING VALIDATION ---
-        int stars = -1;
+        System.out.println("I have located your booking! You stayed with us until " + customerInformation[4]);
+
+        int stars = getStarRating();
+        System.out.print("Please enter your review (optional): ");
+        String review = input.nextLine();
+        
+        addReview(REVIEWS, stars, review, customerInformation);
+        System.out.println("Thank you for submitting a review! A team member will be in touch shortly.");
+    }
+
+    private String[] findReservation(String name, String resId) {
+        String[] customerInfo = checkReservations(RESERVATION, name, resId);
+        if (customerInfo == null) {
+            customerInfo = checkReservations(PAST_RESERVATIONS, name, resId);
+        }
+        return customerInfo;
+    }
+
+    private int getStarRating() {
         while (true) {
             System.out.print("How would you rate your stay? (1–5): ");
-
+            
             if (input.hasNextInt()) {
-                stars = input.nextInt();
-                input.nextLine(); // consume leftover newline
-
+                int stars = input.nextInt();
+                input.nextLine();
+                
                 if (stars >= 1 && stars <= 5) {
-                    break; // valid
-                } else {
-                    System.out.println("Invalid number. Please enter a value between 1 and 5.");
+                    return stars;
                 }
+                System.out.println("Invalid number. Please enter a value between 1 and 5.");
             } else {
-                System.out.println("Invalid input. Please enter a value between 1 and 5.");
-                input.nextLine(); // discard non-integer
+                System.out.println("Invalid input. Please enter a number between 1 and 5.");
+                input.nextLine();
             }
         }
-
-        System.out.print("Please enter your review (optional): ");
-        String review = input.nextLine();   // no validation needed
-        customerInfo[5] = String.valueOf(stars);
-        customerInfo[6] = review;
-        addReview(REVIEWS,customerInfo);
-        System.out.println("Thankyou for submitting a review! A team member would be in touch shortly");
     }
 
-    private void addReview(String path, String[] customerInformation){
+    private void addReview(String path, int stars, String review, String[] customerInformation) {
         File reviewFile = new File(path);
-        try (PrintWriter pastWriter = new PrintWriter(new FileWriter(reviewFile, true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(reviewFile, true))) {
             if (reviewFile.length() == 0) {
-                pastWriter.println("reservationId,guestName,roomNumber,review");
+                writer.println("reservationId,guestName,roomNumber,stars,review");
             }
-            pastWriter.printf("%s,%s,%d,%s",
-                    customerInformation[0], customerInformation[1], customerInformation[2], customerInformation[5], customerInformation[6]);
+            writer.printf("%s,%s,%s,%d,%s%n",
+                    customerInformation[0], customerInformation[1], customerInformation[2], stars, review);
         } catch (IOException e) {
-            System.out.println("Uh-oh "+ e);
+            System.out.println("Error writing review: " + e.getMessage());
         }
     }
 
-
-    private String[] checkReservations(String path, String nameInput, String resIdInput){
-        try {
-            File file = new File(path);
-            Scanner scn = new Scanner(file);
-
-            while(scn.hasNextLine()) {
+    private String[] checkReservations(String path, String nameInput, String resIdInput) {
+        try (Scanner scn = new Scanner(new File(path))) {
+            while (scn.hasNextLine()) {
                 String line = scn.nextLine().trim();
-                if (line.isEmpty() || line.startsWith("reservationId")) continue; // skip header
+                if (line.isEmpty() || line.startsWith("reservationId")) {
+                    continue;
+                }
+                
                 String[] parts = line.split(",");
+                if (parts.length < 5) {
+                    continue;
+                }
+                
                 String resId = parts[0];
                 String guestName = parts[1];
-                int currentRoom = Integer.parseInt(parts[2]);
-                String startDate = parts[3];
-                String endDate = parts[4];
-
+                
                 if (resIdInput.equals(resId) && nameInput.equals(guestName)) {
-                    parts[5] = "T";
                     return parts;
                 }
             }
-
-        }catch(Exception e){
-            System.out.println("Uh-oh: "+e);
+        } catch (IOException e) {
+            System.out.println("Error reading reservations: " + e.getMessage());
         }
         return null;
     }
