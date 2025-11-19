@@ -105,7 +105,7 @@ public class KitchenPanel extends Employee {
 
         KitchenOrder selected = orders.get(idx - 1);
         kitchenQueue.remove(selected);
-        System.out.println("✅ Order for Room " + selected.getRoomNumber() + " completed by " + staffName + ".");
+        System.out.println("Order for Room " + selected.getRoomNumber() + " completed by " + staffName + ".");
     }
 
     private static List<KitchenOrder> collectOrdersForHotel() {

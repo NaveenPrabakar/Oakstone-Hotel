@@ -147,7 +147,7 @@ public class Housekeeping extends Employee implements CleaningStaff {
 
     private static void viewTickets() {
         if (cleaningQueue.isEmpty()) {
-            System.out.println("📭 No cleaning requests at this time.");
+            System.out.println("No cleaning requests at this time.");
             return;
         }
 
