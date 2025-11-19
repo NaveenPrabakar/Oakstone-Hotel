@@ -40,6 +40,8 @@ public class EmployeeLoginService {
                         return new ExecutivePanel(id, fullName, role);
                     case "DataTeam":
                         return new DataPanel(id, fullName, role);
+                    case "HR":
+                        return new HRPanel(id, fullName, role);
                 }
             }
         }

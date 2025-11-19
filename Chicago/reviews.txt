@@ -1,0 +1,4 @@
+reservationId,guestName,roomNumber,checkoutDate,stars,review,reviewDate,hrResponse,hrRespondent,responseDate,status
+951f8e83-c0e2-4a4b-8e29-f5fe16228f94,Joe Burrow,106,2025-11-18,5,ngentot ,2025-11-18,maafg bang,bruh bruh,2025-11-18,REPLIED
+951f8e83-c0e2-4a4b-8e29-f5fe16228f94,Joe Burrow,106,2025-11-18,4,kontol,2025-11-18,maaf bang,bruh bruh,2025-11-18,REPLIED
+951f8e83-c0e2-4a4b-8e29-f5fe16228f94,Joe Burrow,106,2025-11-18,3,fuck off,2025-11-18,sorry sir,bruh bruh,2025-11-18,REPLIED
