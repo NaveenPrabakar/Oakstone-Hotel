@@ -183,6 +183,13 @@ public class Main {
                         System.out.println("Invalid option for your role.");
                     }
                     break;
+                case "HR":
+                    if (choice.equals("1")) {
+                        HRController.runHRPanel(loggedIn.getName());
+                    } else {
+                        System.out.println("Invalid option for your role.");
+                    }
+                    break;
 
                 default:
                     System.out.println("Unknown role.");
@@ -211,6 +218,9 @@ public class Main {
                 System.out.println("║  1. Front Desk Panel                   ║");
                 System.out.println("║  2. Cleaning Panel                     ║");
                 System.out.println("║  3. Executive Panel                    ║");
+                break;
+            case "HR":
+                System.out.println("║  1. HR Panel                           ║");
                 break;
         }
 

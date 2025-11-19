@@ -1,6 +1,7 @@
 package Main.Guest;
 
 import Main.Main;
+
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
@@ -36,7 +37,6 @@ public class ReviewProcess {
         int stars = getStarRating();
         System.out.print("Please enter your review (optional): ");
         String review = input.nextLine();
-        
         addReview(REVIEWS, stars, review, customerInformation);
         System.out.println("Thank you for submitting a review! A team member will be in touch shortly.");
     }
@@ -72,13 +72,42 @@ public class ReviewProcess {
         File reviewFile = new File(path);
         try (PrintWriter writer = new PrintWriter(new FileWriter(reviewFile, true))) {
             if (reviewFile.length() == 0) {
-                writer.println("reservationId,guestName,roomNumber,stars,review");
+                writer.println("reservationId,guestName,roomNumber,checkoutDate,stars,review,reviewDate,hrResponse,hrRespondent,responseDate,status");
             }
-            writer.printf("%s,%s,%s,%d,%s%n",
-                    customerInformation[0], customerInformation[1], customerInformation[2], stars, review);
+            
+            // Get current date for reviewDate
+            String reviewDate = java.time.LocalDate.now().format(java.time.format.DateTimeFormatter.ISO_LOCAL_DATE);
+            
+            // customerInformation[0] = reservationId
+            // customerInformation[1] = guestName
+            // customerInformation[2] = roomNumber
+            // customerInformation[4] = checkoutDate
+            writer.printf("%s,%s,%s,%s,%d,%s,%s,%s,%s,%s,%s%n",
+                    customerInformation[0],  // reservationId
+                    customerInformation[1],  // guestName
+                    customerInformation[2],  // roomNumber
+                    customerInformation[4],  // checkoutDate
+                    stars,                    // stars
+                    escapeCSV(review),       // review
+                    reviewDate,         // reviewDate
+                    "PENDING",                     // hrResponse (empty)  
+                    "PENDING",                         // hrRespondent (empty)
+                    "PENDING",                 // responseDate (empty));           
+                    "PENDING" );          // status
         } catch (IOException e) {
             System.out.println("Error writing review: " + e.getMessage());
         }
+    }
+
+    private String escapeCSV(String value) {
+        if (value == null || value.isEmpty()) {
+            return "";
+        }
+        // Escape commas and quotes in CSV
+        if (value.contains(",") || value.contains("\"") || value.contains("\n")) {
+            return "\"" + value.replace("\"", "\"\"") + "\"";
+        }
+        return value;
     }
 
     private String[] checkReservations(String path, String nameInput, String resIdInput) {
