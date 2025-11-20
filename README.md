@@ -1,4 +1,4 @@
-# Hotel-ERP-Project
+# Oakstone Hotel
 
 ## Iteration 1
 
