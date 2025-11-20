@@ -246,28 +246,84 @@ public class GuestSession implements CheckingProcess {
                 return;
             }
 
-            System.out.println("\n===== CURRENT BILL FOR ROOM " + roomNumber + " =====");
-            double runningTotal = 0.0;
-            for (String[] line : recorded) {
-                if (line.length < 2) {
-                    continue;
-                }
-                String label = line[0];
-                String detail = line.length >= 3 ? line[1] : "";
-                String amountStr = line.length >= 3 ? line[2] : line[1];
+//            System.out.println("\n===== CURRENT BILL FOR ROOM " + roomNumber + " =====");
+//            double runningTotal = 0.0;
+//            for (String[] line : recorded) {
+//                if (line.length < 2) {
+//                    continue;
+//                }
+//                if (line[0].equals("SECURITY_DEPOSIT (REFUNDED AT CHECK-OUT)")) continue;
+//                String label = line[0];
+//                String detail = line.length >= 3 ? line[1] : "";
+//                String amountStr = line.length >= 3 ? line[2] : line[1];
+//
+//                double amount;
+//                try {
+//                    amount = Double.parseDouble(amountStr);
+//                } catch (NumberFormatException ex) {
+//                    continue;
+//                }
+//
+//                runningTotal += amount;
+//                System.out.printf("%-14s %-14s $%6.2f%n", label, detail, amount);
+//            }
+//            System.out.println("----------------------------------------");
+//            System.out.printf("TOTAL $%6.2f%n%n", runningTotal);
+            System.out.println("\n=============== CURRENT BILL FOR ROOM " + roomNumber + " ============================");
 
-                double amount;
-                try {
-                    amount = Double.parseDouble(amountStr);
-                } catch (NumberFormatException ex) {
+            double runningTotal = 0.0;
+
+// Column widths
+            final int LABEL_WIDTH = 22;
+            final int DATE_WIDTH  = 14;
+            final int AMOUNT_WIDTH = 10;
+
+            for (String[] line : recorded) {
+                if (line.length < 2) continue;
+
+                if (line[0].equals("SECURITY_DEPOSIT (REFUNDED AT CHECK-OUT)"))
                     continue;
+
+                String label = line[0];
+                String date  = "";
+                String amountStr;
+
+                if (line.length >= 3) {
+                    date = line[1];
+                    amountStr = line[2];
+                } else {
+                    amountStr = line[1];
                 }
+
+                double amount = 0;
+                try { amount = Double.parseDouble(amountStr); } catch (Exception ignored) {}
 
                 runningTotal += amount;
-                System.out.printf("%-14s %-14s $%6.2f%n", label, detail, amount);
+
+                if (line[0].startsWith("SECURITY_DEPOSIT")) {
+                    int width = 6;
+                    System.out.printf(
+                            "%-" + LABEL_WIDTH + "s %-" + DATE_WIDTH + "s %" + width + "s$%.2f%n",
+                            label, date, "", amount
+                    );
+                } else {
+                    int width = 23;
+//                    System.out.printf(
+//                            "%-" + LABEL_WIDTH + "s %" + "s$%.2f%n",
+//                            label, date, amount
+//                    );
+                    System.out.printf(
+                            "%-" + LABEL_WIDTH + "s %-" + DATE_WIDTH + "s %" + width + "s$%.2f%n",
+                            label, date, "", amount
+                    );
+                }
             }
-            System.out.println("----------------------------------------");
-            System.out.printf("TOTAL $%6.2f%n%n", runningTotal);
+            int width = 22;
+            System.out.println("----------------------------------------------------------------------");
+            System.out.printf(
+                    "%-" + (LABEL_WIDTH + DATE_WIDTH) + "s %" + width + "s$%.2f%n",
+                    "TOTAL", "", runningTotal
+            );
         } catch (IOException e) {
             System.out.println("Unable to read current bill: " + e.getMessage());
         }

@@ -95,7 +95,8 @@ public class BillingManager {
         List<String> lines = new ArrayList<>();
 
         // Security Deposit
-        lines.add("SECURITY_DEPOSIT," + SECURITY_DEPOSIT);
+        lines.add("SECURITY_DEPOSIT (RECEIVED AT CHECK-IN)," + SECURITY_DEPOSIT);
+        lines.add("SECURITY_DEPOSIT (REFUNDED AT CHECK-OUT)," + SECURITY_DEPOSIT);
 
         // Daily room charges
         LocalDate date = r.getStartDate();

@@ -1,5 +1,6 @@
 package Main.Controller;
 
+import Main.Data.DataRepository;
 import Main.Employee.*;
 import Main.Main;
 import java.io.File;
@@ -7,6 +8,13 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 
 public class EmployeeLoginService {
+
+    private static DataRepository repo;
+
+    public static void initialize(DataRepository repository) {
+        repo = repository;
+    }
+
     public static Employee login(String username, String password) throws FileNotFoundException {
         File file = new File(Main.HOTEL_PATH + "/" + "Employee.txt");
 
@@ -47,5 +55,19 @@ public class EmployeeLoginService {
         }
 
         return null;
+    }
+
+    public static Employee createEmployee(String name, String role,
+                                          String username, String password) {
+
+        int newId = repo.getNextEmployeeId();
+
+        Employee e = new Employee(newId, name, role, username, password);
+
+        boolean saved = repo.addEmployee(e);
+
+        if (!saved) return null;
+
+        return e;
     }
 }
