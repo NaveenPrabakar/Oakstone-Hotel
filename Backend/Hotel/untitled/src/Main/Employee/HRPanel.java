@@ -1,59 +1,48 @@
 package Main.Employee;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Scanner;
 import Main.*;
+import Main.Data.ReviewRepository;
 
 public class HRPanel extends Employee implements HRTeam {
 
-    ArrayList<String[]> reviews = new ArrayList<>();
+    private ArrayList<String[]> reviews = new ArrayList<>();
+    private ReviewRepository reviewRepository;
 
     public HRPanel(int StaffID, String name, String role) {
         super(StaffID, name, role);
+        this.reviewRepository = new ReviewRepository();
     }
 
     @Override
     public void viewReviews() {
-        File selected = new File(Main.HOTEL_PATH + "/reviews.txt");
         // Implementation for viewing reviews
-        System.out.println("\n--- Viewing: " + selected.getName() + " ---");
+        System.out.println("\n--- Viewing: " + this.getName() + " ---");
         System.out.println("--------------------------------------------");
 
-        try (Scanner reader = new Scanner(selected)) {
-            while (reader.hasNextLine()) {
-                String[] line = reader.nextLine().split(",");
-                
-                if (line.length == 0 || line[0].startsWith("reservationId")) {
-                    System.out.print("   || ");
-                    for (int i = 0; i < line.length; i++) {
-                        System.out.print(line[i].trim() + " | ");
-                    }
-                    System.out.println();
-                    continue;
-                }
-                System.out.print(reviews.size()+1 + "|| ");
-                for (int i = 0; i < line.length; i++) {
-                    System.out.print(line[i].trim() + " | ");
-    
-                }
-                reviews.add(line);
-                System.out.println();
+        List<String[]> allReviews = reviewRepository.loadAllReviews();
+        int reviewCount = 0;
+        
+        for(String[] line : allReviews) {
+            if (line.length == 0) {
+                continue; // Skip empty lines
             }
-        } catch (FileNotFoundException e) {
-            System.out.println("Error: " + e.getMessage());
+            if (line[0].startsWith("reservationId")) {
+                System.out.println("HEADER || " + String.join(" | ", line));
+                continue; // Skip adding header to reviews list
+            }
+            reviews.add(line);
+            reviewCount++;
+            System.out.println(reviewCount + " || " + String.join(" | ", line));
         }
-
         if (reviews.size() == 0) {
             System.out.println("No reviews available.");
             return;
         }
         replytoReviews();
-        refreshReviews();
-        reviews = new ArrayList<>();
-        
+        reviews.clear();
     }
 
     private void replytoReviews() {
@@ -83,31 +72,17 @@ public class HRPanel extends Employee implements HRTeam {
         System.out.println("Enter your reply: ");
         String reply = sc.nextLine();
 
-        // Update the reply in the reviews array
+        // Get the selected review
         String[] selectedReview = reviews.get(choice - 1);
-        selectedReview[7] = reply;
-        selectedReview[8] = this.getName();
-        selectedReview[9] = java.time.LocalDate.now().toString();
-        selectedReview[10] = "REPLIED";
+        String reservationId = selectedReview[0];
+        
         System.out.println("------------------");
         System.out.println("Replying to: \n" + selectedReview[1] + ": " +  selectedReview[5]);
         System.out.println("Your Reply: " + reply);
         System.out.println("------------------");
-
-        //TODO: Save reply somewhere
-    }
-
-    private void refreshReviews(){
-        // Write updated reviews back to file
-        try (java.io.PrintWriter writer = new java.io.PrintWriter(Main.HOTEL_PATH + "/reviews.txt")) {
-                writer.println("reservationId,guestName,roomNumber,checkoutDate,stars,review,reviewDate,hrResponse,hrRespondent,responseDate,status");
-            for (String[] review : reviews) {
-                writer.println(String.join(",", review));
-            }
-            System.out.println("Reply saved successfully!");
-        } catch (FileNotFoundException e) {
-            System.out.println("Error saving reply: " + e.getMessage());
-        }
+        
+        // Use repository to save the reply
+        reviewRepository.addHRResponse(reservationId, this.getName(), reply);
     }
 
     @Override

@@ -1,9 +1,11 @@
 package Main.Booking;
 
 import Main.Main;
+import Main.Data.FileDataRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Path;
 import java.time.LocalDate;
 import java.util.Scanner;
 
@@ -42,28 +44,25 @@ public class Reservation {
     }
 
     private String[] checkReservations(String path, String nameInput, String resIdInput) {
-        try (Scanner scn = new Scanner(new File(path))) {
-            while (scn.hasNextLine()) {
-                String line = scn.nextLine().trim();
-                if (line.isEmpty() || line.startsWith("reservationId")) {
-                    continue;
-                }
-                
-                String[] parts = line.split(",");
-                if (parts.length < 5) {
-                    continue;
-                }
-                
-                String resId = parts[0];
-                String guestName = parts[1];
-                
-                if (resIdInput.equals(resId) && nameInput.equals(guestName)) {
-                    return parts;
-                }
-            }
-        } catch (IOException e) {
-            System.out.println("Error reading reservations: " + e.getMessage());
+        java.util.List<String[]> reservations;
+        FileDataRepository fileDataRepository = new FileDataRepository(Path.of(Main.HOTEL_PATH));
+        
+        if (path.equals(RESERVATION)) {
+            reservations = fileDataRepository.loadReservations();
+        } else {
+            reservations = fileDataRepository.loadPastReservations();
         }
+        
+        for (String[] reservation : reservations) {
+            // Skip header row
+            if (reservation[0].equals("reservationId")) {
+                continue;
+            }
+            if (reservation[0].equals(resIdInput) && reservation[1].equals(nameInput)) {
+                return reservation;
+            }
+        }
+        
         return null;
     }
 
