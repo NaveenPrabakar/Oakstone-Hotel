@@ -2,12 +2,8 @@ package Main.Booking;
 
 import Main.Main;
 import Main.Data.FileDataRepository;
-
-import java.io.File;
-import java.io.IOException;
 import java.nio.file.Path;
 import java.time.LocalDate;
-import java.util.Scanner;
 
 public class Reservation {
     private String reservationId;

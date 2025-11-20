@@ -122,7 +122,7 @@ public class ReviewRepository {
     /**
      * Updates a review with HR response
      */
-    public void addHRResponse(String reservationId, String hrName, String response) {
+    public void addHRResponse(Reservation reservation, String hrName, String response) {
         List<String[]> allReviews = new ArrayList<>();
         String[] header = null;
         boolean found = false;
@@ -144,7 +144,7 @@ public class ReviewRepository {
                 }
                 
                 // Check if this is the review we want to reply to
-                if (parts[0].equals(reservationId) && !found) {
+                if (parts[0].equals(reservation.getReservationId()) && !found) {
                     parts[7] = escapeCSV(response);
                     parts[8] = hrName;
                     parts[9] = java.time.LocalDate.now().toString();
@@ -165,7 +165,7 @@ public class ReviewRepository {
         if (found) {
             System.out.println("Reply saved successfully!");
         } else {
-            System.out.println("Review not found for reservation ID: " + reservationId);
+            System.out.println("Review not found for reservation ID: " + reservation.getReservationId());
         }
     }
 

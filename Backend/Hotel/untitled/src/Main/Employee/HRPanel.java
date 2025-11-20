@@ -1,9 +1,11 @@
 package Main.Employee;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 import Main.*;
+import Main.Booking.Reservation;
 import Main.Data.ReviewRepository;
 
 public class HRPanel extends Employee implements HRTeam {
@@ -74,7 +76,8 @@ public class HRPanel extends Employee implements HRTeam {
 
         // Get the selected review
         String[] selectedReview = reviews.get(choice - 1);
-        String reservationId = selectedReview[0];
+        // Create a simple reservation object with just the ID
+        Reservation reservationId = new Reservation(selectedReview[0],selectedReview[1],Integer.parseInt(selectedReview[2]), LocalDate.parse(selectedReview[3]),LocalDate.parse(selectedReview[3]));
         
         System.out.println("------------------");
         System.out.println("Replying to: \n" + selectedReview[1] + ": " +  selectedReview[5]);
