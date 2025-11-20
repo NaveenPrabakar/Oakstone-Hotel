@@ -166,16 +166,14 @@ public class BillManager {
             double subtotal = 0.0;
 
             // ---------- SECURITY DEPOSIT ----------
-            if (securityDeposit > 0) {
-                int pad = (WIDTH - "SECURITY DEPOSIT".length() - 10) / 2;
-                if (pad < 0) pad = 0;
-                System.out.println("=".repeat(pad+4) + "==== SECURITY DEPOSIT " + "=".repeat(pad + 6));
+            int padding = (WIDTH - "SECURITY DEPOSIT".length() - 10) / 2;
+            if (padding < 0) padding = 0;
+            System.out.println("=".repeat(padding+4) + "==== SECURITY DEPOSIT " + "=".repeat(padding + 6));
 
-                System.out.printf("%12s %28s%n",
-                        "Deposit", String.format("$%7.2f", securityDeposit));
+            System.out.printf("%12s %28s%n",
+                    "Deposit", String.format("$%7.2f", securityDeposit));
 
-                subtotal += securityDeposit;
-            }
+            subtotal += securityDeposit;
 
             // ---------- ROOM CHARGES ----------
             if (!roomCharges.isEmpty()) {
