@@ -14,5 +14,18 @@ Demo video for Iteration:
 
 ## Iteration 2
 
-In development
+10 usecases implemented:
+- Call Room service
+- Mini-Bar/Room Service Usage Tracking
+- Write Reviews
+- Analyze past data
+- Set Hotel Prices
+- Calculate bills
+- Review feedback
+- Clock in & out
+- Call House Keeping
+- Login for Workers
+
+Demo video for Iteration:
+[![Watch the video](https://img.youtube.com/vi/JtIW-Ivl7ec?si=of15HI904WYVe6-2/maxresdefault.jpg)](https://youtu.be/JtIW-Ivl7ec?si=of15HI904WYVe6-2)
 
