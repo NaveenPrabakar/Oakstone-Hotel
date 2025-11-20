@@ -1,6 +1,11 @@
 package Main.Booking;
 
+import Main.Main;
+
+import java.io.File;
+import java.io.IOException;
 import java.time.LocalDate;
+import java.util.Scanner;
 
 public class Reservation {
     private String reservationId;
@@ -9,12 +14,57 @@ public class Reservation {
     private LocalDate startDate;
     private LocalDate endDate;
 
+    private static final String RESERVATION = Main.HOTEL_PATH + "/Reservation.txt";
+    private static final String PAST_RESERVATIONS = Main.HOTEL_PATH + "/Past_Reservation.txt";
+
     public Reservation(String reservationId, String guestName, int roomNumber, LocalDate startDate, LocalDate endDate) {
         this.reservationId = reservationId;
         this.guestName = guestName;
         this.roomNumber = roomNumber;
         this.startDate = startDate;
         this.endDate = endDate;
+    }
+
+    public Reservation(String name, String resId) {
+        String[] customerInfo = checkReservations(RESERVATION, name, resId);
+        if (customerInfo == null) {
+            customerInfo = checkReservations(PAST_RESERVATIONS, name, resId);
+        }
+        if (customerInfo != null) {
+            this.reservationId = customerInfo[0];
+            this.guestName = customerInfo[1];
+            this.roomNumber = Integer.parseInt(customerInfo[2]);
+            this.startDate = LocalDate.parse(customerInfo[3]);
+            this.endDate = LocalDate.parse(customerInfo[4]);
+        } else {
+            System.out.println("Reservation not found for the given name and reservation ID.");
+        }
+    }
+
+    private String[] checkReservations(String path, String nameInput, String resIdInput) {
+        try (Scanner scn = new Scanner(new File(path))) {
+            while (scn.hasNextLine()) {
+                String line = scn.nextLine().trim();
+                if (line.isEmpty() || line.startsWith("reservationId")) {
+                    continue;
+                }
+                
+                String[] parts = line.split(",");
+                if (parts.length < 5) {
+                    continue;
+                }
+                
+                String resId = parts[0];
+                String guestName = parts[1];
+                
+                if (resIdInput.equals(resId) && nameInput.equals(guestName)) {
+                    return parts;
+                }
+            }
+        } catch (IOException e) {
+            System.out.println("Error reading reservations: " + e.getMessage());
+        }
+        return null;
     }
 
     public String getReservationId() {
