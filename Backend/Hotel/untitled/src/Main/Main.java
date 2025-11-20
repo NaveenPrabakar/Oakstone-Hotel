@@ -331,11 +331,11 @@ public class Main {
         System.out.println("What's your reservation ID?");
         String resId = sc.nextLine().trim();
         Reservation reservation = new Reservation(name, resId);
-        System.out.println("I have located your booking! You stayed with us until " + reservation.getEndDate());
-
-
-        ReviewProcess reviewProcess = new ReviewProcess(reservation);
-        reviewProcess.execute(sc);
+        if (reservation.getStatus()) {
+            System.out.println("I have located your booking! You stayed with us until " + reservation.getEndDate());
+            ReviewProcess reviewProcess = new ReviewProcess(reservation);
+            reviewProcess.execute(sc);
+        }
     }
 
     private static void printBanner1() {

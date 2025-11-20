@@ -11,6 +11,7 @@ public class Reservation {
     private int roomNumber;
     private LocalDate startDate;
     private LocalDate endDate;
+    private boolean complete = false;
 
     private static final String RESERVATION = Main.HOTEL_PATH + "/Reservation.txt";
     private static final String PAST_RESERVATIONS = Main.HOTEL_PATH + "/Past_Reservation.txt";
@@ -21,6 +22,7 @@ public class Reservation {
         this.roomNumber = roomNumber;
         this.startDate = startDate;
         this.endDate = endDate;
+        this.complete = true;
     }
 
     public Reservation(String name, String resId) {
@@ -34,8 +36,10 @@ public class Reservation {
             this.roomNumber = Integer.parseInt(customerInfo[2]);
             this.startDate = LocalDate.parse(customerInfo[3]);
             this.endDate = LocalDate.parse(customerInfo[4]);
+            this.complete = true;
         } else {
             System.out.println("Reservation not found for the given name and reservation ID.");
+            this.complete = false;
         }
     }
 
@@ -80,6 +84,10 @@ public class Reservation {
 
     public LocalDate getEndDate() {
         return endDate;
+    }
+
+    public boolean getStatus(){
+        return complete;
     }
 
     @Override
