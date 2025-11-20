@@ -1,0 +1,11 @@
+Guest calls room service -> Name: Call Room service (Brendan) done
+MiniBar and Room Service Setup + Calculations -> Name: Mini-Bar/Room Service Usage Tracking  (Ozair) done
+Guest writes reviews -> Name: Write Reviews (Nicholas) done
+Analytics team views data -> Name: Analyze past data (Naveen) cant delete
+Executives set hotel prices -> Name: Set Hotel Prices (Naveen) done
+System Calculates Payment -> Name: Calculate bills (Pranava)
+HR reviews Guest feedback -> Name: Review feedback (Nicholas) done
+Hotel Worker Clocks-in/out -> Name: Clock in & out (Ozair) done
+Guest cancels reservation -> Name: Cancel the reservation (Brendan)
+Hotel staff should be able to login and check appropriate tasks -> Name: Login for Workers (Pranava) done
+
