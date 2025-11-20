@@ -27,5 +27,6 @@ Demo video for Iteration:
 - Login for Workers
 
 Demo video for Iteration:
-[![Watch the video](https://img.youtube.com/vi/JtIW-Ivl7ec?si=of15HI904WYVe6-2/maxresdefault.jpg)](https://youtu.be/JtIW-Ivl7ec?si=of15HI904WYVe6-2)
+[![Watch the video](https://img.youtube.com/vi/JtIW-Ivl7ec/maxresdefault.jpg)](https://youtu.be/JtIW-Ivl7ec)
+
 
