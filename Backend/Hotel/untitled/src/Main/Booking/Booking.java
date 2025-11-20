@@ -46,7 +46,7 @@ public class Booking implements BookingInterface {
         RESERVATION_FILE = Main.HOTEL_PATH+ "/" + "Reservation.txt";
         GUEST_FILE = Main.HOTEL_PATH+ "/" +"Guest.txt";
 
-        System.out.println("📍 Selected hotel: " + selectedCity);
+        System.out.println("Selected hotel: " + selectedCity);
 
         // STEP 3: Proceed with booking flow for that location
         Booking bookingSystem = new Booking();
