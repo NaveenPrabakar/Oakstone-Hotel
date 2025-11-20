@@ -5,6 +5,8 @@ import java.nio.file.Paths;
 import java.util.*;
 import java.io.File;
 import Main.Booking.Booking;
+import Main.Booking.Reservation;
+import Main.Booking.ReviewProcess;
 import Main.Controller.*;
 import Main.Data.DataRepository;
 import Main.Data.FileDataRepository;
@@ -318,14 +320,22 @@ public class Main {
         String hotel = sc.nextLine().trim();
 
         if (hotel.isEmpty()) {
-            System.out.println("❌ No location entered. Returning to menu.");
+            System.out.println("No location entered. Returning to menu.");
             return;
         }
 
         Main.HOTEL_PATH = hotel;
-        //process assuming were giving a review to a guests experience in the hotel
-        //room itself, not the whole hotel like google reviews
-        new ReviewProcess(sc).execute();
+
+        System.out.println("What's your name?");
+        String name = sc.nextLine().trim();
+        System.out.println("What's your reservation ID?");
+        String resId = sc.nextLine().trim();
+        Reservation reservation = new Reservation(name, resId);
+        System.out.println("I have located your booking! You stayed with us until " + reservation.getEndDate());
+
+
+        ReviewProcess reviewProcess = new ReviewProcess(reservation);
+        reviewProcess.execute(sc);
     }
 
     private static void printBanner1() {
